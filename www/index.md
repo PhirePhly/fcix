@@ -4,6 +4,6 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 layout: home
 ---
-ca·bal, _noun_: A secret clique or faction.
+# ca·bal, _noun_: A secret clique or faction.
 
 Except we're not particularly secret, nor cliquey. We're quite welcoming, actually.

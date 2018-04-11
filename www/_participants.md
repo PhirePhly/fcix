@@ -4,7 +4,7 @@ title: Participants
 permalink: /participants/
 ---
 
-Are you not on this list and want to be? Contact us.
+Are you not on this list and want to be? Contact us - <contact@fcix.net>
 
 The members of FCIX include:
 

@@ -1,4 +1,4 @@
-.PHONY : www www-install www-dev
+.PHONY : www www-install www-dev conf conf-install-rs1
 
 www:
 	bin/gen_www_participants.sh
@@ -9,3 +9,11 @@ www-dev: www
 
 www-install: www
 	rsync -av --delete-delay www/_site/ kwfwebsrvr:~/www/fcix.net
+
+conf:
+	bin/gen_routeserver_bgpd.sh
+
+conf-install-rs1: conf
+	cp conf/RS1.zebra.conf /etc/quagga/zebra.conf
+	cp conf/RS1.bgpd.conf /etc/quagga/bgpd.conf
+

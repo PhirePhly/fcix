@@ -4,4 +4,6 @@ www/_site
 www/.sass-cache
 www/.jekyll-metadata
 
-
+# Ephemeral config files
+conf/RS1.bgpd.conf
+conf/RS2.bgpd.conf

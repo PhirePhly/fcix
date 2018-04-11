@@ -1,2 +1,3 @@
-# fcix
-Fremont Cabal Internet Exchange
+# Fremont Cabal Internet Exchange
+
+This repo is all of the build scripts for the Fremont Cabal Internet Exchange. The FCIX is meant to reduce the number of needed cross connects between a group of friends in the Hurricane Electric FMT2 facility, but others are welcome to build in if they'd like, I guess...

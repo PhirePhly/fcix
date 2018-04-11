@@ -1,0 +1,7 @@
+# Website build results
+www/participants.md
+www/_site
+www/.sass-cache
+www/.jekyll-metadata
+
+

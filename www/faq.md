@@ -7,7 +7,7 @@ permalink: /FAQ/
 ### Are you really a cabal?
 
 No. We started calling ourselves a cabal in jest, and the name stuck.
-We also call ourselves the Oligarchs of Aisle Six, but that's obviously not right either.
+We also call ourselves the Oligarchs of Aisle Six, but that's obviously not true either.
 
 ### Are you trying to compete with other Internet Exchanges in the Bay Area?
 

@@ -17,3 +17,7 @@ conf-install-rs1: conf
 	cp conf/RS1.zebra.conf /etc/quagga/zebra.conf
 	cp conf/RS1.bgpd.conf /etc/quagga/bgpd.conf
 
+conf-install-rs2: conf
+	cp conf/RS2.zebra.conf /etc/quagga/zebra.conf
+	cp conf/RS2.bgpd.conf /etc/quagga/bgpd.conf
+

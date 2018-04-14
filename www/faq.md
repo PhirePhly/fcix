@@ -11,7 +11,9 @@ We also call ourselves the Oligarchs of Aisle Six, but that's obviously not true
 
 ### Are you trying to compete with other Internet Exchanges in the Bay Area?
 
-No. If you're looking to join a local IX with a valuable mix of members, we strongly encourage you to join [SFMIX](https://sfmix.org/). We're just a group of network engineers saving some money on Ethernet cables.
+No.
+
+God no. If you're looking to join a local IX with a valuable mix of members, we strongly encourage you to join [SFMIX](https://sfmix.org/). We're just a group of network engineers saving some money on Ethernet cables.
 
 ### Can I join FCIX?
 

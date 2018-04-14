@@ -7,7 +7,7 @@ permalink: /connect/
 ## Requirements
 
 * Operate an autonomous system using a public RIR allocated ASN.
-* Have a physical presense in Hurricane Electric FMT2
+* Have a physical presence in Hurricane Electric FMT2
 * Be willing to pay for the cross connect and supply Cisco-compatible optics to light it or be close enough to suite 1400 aisle 6 to use copper.
 * Be able to eBGP peer with private ASN 4244741280.
 * Be good natured and friendly.

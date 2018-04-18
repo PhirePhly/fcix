@@ -12,4 +12,6 @@ First and foremost, FCIX was set up as a learning exercise in running an IX, so 
 
 The entire FCIX fabric is built as a VLAN on a single Cisco 6506. I know; very sophisticated.
 
+![FCIX Topology]({{ "/assets/FCIX.png" | absolute_url }})
+
 The two route servers are both VMs spread across two hypervisors inside PhirePhly Design and Mojo Networks, respectively. They're currently running Quagga and BIRD, but that's subject to change as we continue to figure out which route server implementation is the least buggy.

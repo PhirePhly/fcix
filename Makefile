@@ -8,6 +8,7 @@ www-dev: www
 	cd www; jekyll serve --livereload
 
 www-install: www
+	cd www; JEKYLL_ENV=production jekyll build
 	rsync -av --delete-delay www/_site/ kwfwebsrvr:~/www/fcix.net
 
 conf:

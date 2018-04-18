@@ -8,4 +8,4 @@ layout: home
 
 Except we're not particularly secret, nor cliquey. We're quite welcoming, actually.
 
-We're a group of amateur radio operators who started an Internet Exchange to save on the number of cross connects we needed between our cabinets.
+We're a group of amateurs who started an Internet Exchange to save on the number of cross connects we needed between our cabinets.

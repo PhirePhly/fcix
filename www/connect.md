@@ -12,8 +12,8 @@ permalink: /connect/
 * Be good natured and friendly.
 * Be willing to tolerate the service levels commiserate with a best-effort IX.
 * Have a profile on peeringDB.com including correctly listing Hurricane Electric FMT2 as a private peering facility if applicable.
-* Be willing to pay for the fiber cross connect to the fabric.
+* Be able to light a 1000BASE-LX single mode cross connect into the IX. Hurricane Electric will cover the cost of the cross connect, so you only need to BYOO (Bring-Your-Own-Optic).
 
 ## How to Get Started
 
-Email <contact@fcix.net> with an introduction
+Email <contact@fcix.net> with an introduction, your ASN, and how you heard about us!

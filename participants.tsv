@@ -1,12 +1,13 @@
 Org_Number Organization	ASN	Approx_IPv4_Prefix	Approx_IPv6_Prefix
-2	PhirePhly Design	7034	1	1
+2	PhirePhly Design	7034	10	10
 3	Mojo Networks	7247	10000	10000
 4	m2os LLC	14939	50	10
-5	SRDF Labs	64260	4	2
-6	Heaven Express, LLC	396480	3	2
-7	Bungi Communications	6596	5	2
-8	HalNet	29962	2	1
+5	SRDF Labs	64260	10	10
+6	Heaven Express, LLC	396480	10	10
+7	Bungi Communications	6596	10	10
+8	HalNet	29962	10	10
 9	Hurricane Electric	6939	107000	25000
-10	Little Moe, LLC	43126	2	2
-11	Invalid Network	53758	2	2
-12	Gush I Systems	393507	2	2
+10	Little Moe, LLC	43126	10	10
+11	Invalid Network	53758	10	10
+12	Gushi Systems	393507	10	10
+13	Two P	6140	1000	50

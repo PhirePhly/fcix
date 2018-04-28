@@ -7,3 +7,7 @@ www/.jekyll-metadata
 # Ephemeral config files
 conf/RS1.bgpd.conf
 conf/RS2.bgpd.conf
+conf/RS1.bird.conf
+conf/RS1.bird6.conf
+conf/RS2.bird.conf
+conf/RS2.bird6.conf

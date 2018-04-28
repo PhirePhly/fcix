@@ -13,10 +13,11 @@ www-install: www
 
 conf:
 	bin/gen_routeserver_bgpd.sh
+	bin/gen_bird_conf.sh
 
 conf-install-rs1: conf
-	cp conf/RS1.zebra.conf /etc/quagga/zebra.conf
-	cp conf/RS1.bgpd.conf /etc/quagga/bgpd.conf
+	cp conf/RS1.bird.conf /etc/bird/bird.conf
+	cp conf/RS1.bird6.conf /etc/bird/bird6.conf
 
 conf-install-rs2: conf
 	cp conf/RS2.zebra.conf /etc/quagga/zebra.conf

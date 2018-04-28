@@ -70,10 +70,10 @@ sed "s/44.74.128.253/44.74.128.254/g" conf/RS1.bird.conf >conf/RS2.bird.conf
 sed "s/44.74.128.253/44.74.128.254/g; s/2607:7C80:55:128::253/2607:7C80:55:128::254/g" conf/RS1.bird6.conf >conf/RS2.bird6.conf
 
 tail -n +2 participants.tsv | \
-awk -F '\t' '{print "protocol bgp AS" $3 " from template_rspeer {\n  description \"" $2 "\";\n  neighbor 44.74.128." $1 " as " $3 ";\n}\n" }' | \
+awk -F '\t' '{print "protocol bgp AS" $3 " from template_rspeer {\n  description \"" $2 "\";\n  neighbor 44.74.128." $1 " as " $3 ";\n  import limit " $4 * 2 + 1 " action restart;\n}\n" }' | \
 tee -a conf/RS1.bird.conf >>conf/RS2.bird.conf
 
 tail -n +2 participants.tsv | \
-awk -F '\t' '{print "protocol bgp AS" $3 " from template_rspeer {\n  description \"" $2 "\";\n  neighbor 2607:7C80:55:128::" $1 " as " $3 ";\n}\n" }' | \
+awk -F '\t' '{print "protocol bgp AS" $3 " from template_rspeer {\n  description \"" $2 "\";\n  neighbor 2607:7C80:55:128::" $1 " as " $3 ";\n  import limit " $4 * 2 + 1 " action restart;\n}\n" }' | \
 tee -a conf/RS1.bird6.conf >>conf/RS2.bird6.conf
 

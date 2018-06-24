@@ -19,7 +19,7 @@ Sure. See the [connect](/connect/) page.
 
 ### My network isn't in Hurricane Electric FMT2; can I still join?
 
-No? Well, technically yes, but I really don't understand why you'd want to spend all the money to get transport into the build just to join the cabal.
+No? Well, technically yes, but I really don't understand why you'd want to spend all the money to get transport into the building just to join the cabal.
 
 ### What's the Monthly Recurring Cost for joining FCIX?
 

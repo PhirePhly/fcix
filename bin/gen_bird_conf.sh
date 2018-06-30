@@ -29,6 +29,8 @@ template bgp template_rspeer {
  import keep filtered;
  import limit 10000 action restart;
  rs client;
+ passive on;
+ interpret communities off;
 }
 
 # Begin per peer config
@@ -60,6 +62,8 @@ template bgp template_rspeer {
  import keep filtered;
  import limit 10000 action restart;
  rs client;
+ passive on;
+ interpret communities off;
 }
 
 # Begin per peer config

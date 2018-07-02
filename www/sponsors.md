@@ -18,4 +18,4 @@ Since FCIX is a project started and run solely by volunteers, what we do wouldn'
 
 ## Contributions
 
-FCIX isn't a registered non-profit (since that would kind of blow our whole scrappy secret organization aesthetic), but if you'd like to send us money to help cover all our personal expenses and probably get yourself on some list somewhere, [we accept PayPal](paypal.me/KennethFinnegan/20).
+FCIX prides itself in being an affordable IXP without port fees, but that's only possible due to the generosity of our sponsors and members.  If you've always wanted to be a paying member of a cabal, and probably get yourself on some list somewhere, [we accept PayPal](https://paypal.me/KennethFinnegan/20).

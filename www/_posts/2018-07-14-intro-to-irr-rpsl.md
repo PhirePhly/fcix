@@ -184,7 +184,7 @@ If you know that you won't have any downstream transit customers or different AS
 On the other hand, if you think you might _ever_ need to describe export policy including other ASNs, it might be a good idea to just define your export policy in terms of sets of ASNs.
 Even if you currently don't have any downstream customers, you can just define an `as-set` only including your `aut-num`, and just need to come back later and modify this one object.
 
-There are a lot of networks which just try and name their `as-set` objects something unique so there isn't collisions with `as-set` names from other networks, and the requirements / conventions likely vary from IRR database to database, so we are again presenting AltDB's recommended naming convention for objects.
+There are a lot of networks which just try and name their `as-set` objects something unique so there aren't collisions with `as-set` names from other networks, and the requirements / conventions likely vary from IRR database to database, so we are again presenting AltDB's recommended naming convention for objects.
 To make sure that all of your `as-set` object names are unique, you should take advantage of the fact that you've already paid an RIR money to ensure that your ASN is unique, and preface the `as-set` with your `aut-num` object name.
 You follow this with a colon, and "AS-" to easily identify this as an `as-set` as opposed to a `route-set` or some other sort of object.
 You can finally apply a useful name for the set such as "ALL" to cover yourself and all your customers, or "CUSTOMERS" to cover your customers but not yourself. 
@@ -265,15 +265,17 @@ If you're creating IRR objects to support originating the same prefix from multi
 # Step 5: Post Your Most General IRR Export Policy to PeeringDB
 
 Since we now have the `aut-num` created with `route`/`route6` objects for each of its prefixes, and optional `as-set` objects for the collection of your `aut-num` and your transit customers, you want to tell other networks which object to use for filtering.
-We already specify this in the `mp-export` clause of the `aut-num` object, but it's possible that some IRR tools will instead look for your export policy from your PeeringDB profile.
+We already specify this in the `mp-export` clause of the `aut-num` object, but some IRR tools will only look for your export policy from your PeeringDB profile.
 
 If your first thought is that you don't have a PeeringDB profile, you should probably correct that first.
-Being able to pull up a different network's peering locations and peering policy all on one cross-referenced page is remarkable handy, so if you'd like other networks to be peering with you, you should try and make it as easy as possible for them.
+Being able to pull up a different network's peering locations and peering policy all on one cross-referenced page is remarkable handy, so if you'd like other networks to ever peer with you, you should try and make it as easy as possible for them.
 
 ![Example PeeringDB Profile with IRR Record]({{ "/assets/peeringdb_irr_record.png" | absolute_url }})
 
 PeeringDB doesn't support the fine-grain control that the `aut-num` object does with its ability to specify export policies per peer, but you should be able to select some `aut-num` or `as-set` object which would be the best default lacking a more specific policy described in your `aut-num`
 
+While you're logged into PeeringDB, you should also set your "IPv4 Prefixes" and "IPv6 Prefixes" fields.
+Many networks will pull those two numbers to set prefix limits on your peering sessions as well.
 
 # Step 6: Bask in the Glory and Check Your Work
 
@@ -287,6 +289,8 @@ To check your work, there is the handy [IRR Explorer](http://irrexplorer.nlnog.n
 This tool lets you search by your ASN and will show you what prefixes are seen coming from your network over BGP compared to what prefixes are documented in various IRR databases and flag any inconsistencies.
 It is not unusual to find dangling IRR objects left over from the previous user of your ASN, or other networks who have just added your prefixes under their ASNs by accident.
 Much of the information in IRR is incredibly out of date, and maintainers tend to not clean up objects unless asked to, so if you'd like, feel free to email the contact info listed in their `mntner` objects to ask they remove the IRR objects that shouldn't be there.
+
+* * *
 
 Just to recap all of the objects we stepped through here in one place, at the minimum two emails were sent to <auto-dbm@altdb.net>;
 one to create the `mntner` object, and a second with all the objects for the network itself once the `mntner` object was approved.

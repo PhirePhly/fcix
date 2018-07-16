@@ -2,6 +2,8 @@
 
 www:
 	bin/gen_www_participants.sh
+	bin/gen_routeserver_clients.sh
+	bin/gen_routeserver_policypage.sh
 	cd www; jekyll build
 
 www-dev: www
@@ -12,14 +14,20 @@ www-install: www
 	rsync -av --delete-delay www/_site/ kwfwebsrvr:~/www/fcix.net
 
 conf:
-	bin/gen_routeserver_bgpd.sh
-	bin/gen_bird_conf.sh
+	bin/gen_routeserver_clients.sh
+	bin/gen_routeserver_conf.sh
 
-conf-install-rs1: conf
-	cp conf/RS1.bird.conf /etc/bird/bird.conf
-	cp conf/RS1.bird6.conf /etc/bird/bird6.conf
+conf-rs1: conf
+	cp routeserver/RS1.bird.conf /etc/bird/bird.conf
+	cp routeserver/RS1.bird6.conf /etc/bird/bird6.conf
+	killall -SIGHUP bird
+	killall -SIGHUP bird6
 
-conf-install-rs2: conf
-	cp conf/RS2.zebra.conf /etc/quagga/zebra.conf
-	cp conf/RS2.bgpd.conf /etc/quagga/bgpd.conf
+conf-rs2: conf
+	cp routeserver/RS2.bird.conf /etc/bird/bird.conf
+	cp routeserver/RS2.bird6.conf /etc/bird/bird6.conf
+	killall -SIGHUP bird
+	killall -SIGHUP bird6
+
+
 

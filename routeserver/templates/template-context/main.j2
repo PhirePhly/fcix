@@ -1,0 +1,31 @@
+ip_ver
+------
+{{ ip_ver|to_yaml }}
+
+cfg
+---
+{{ cfg.cfg|to_yaml }}
+
+bogons
+------
+{{ bogons.cfg|to_yaml }}
+
+clients
+-------
+{{ clients.cfg|to_yaml }}
+
+asns
+----
+{{ asns.cfg|to_yaml }}
+
+irrdb_info
+----------
+{{ irrdb_info|parse_irrdb_info|sort(attribute="id")|to_yaml }}
+
+rpki_roas
+---------
+{{ rpki_roas|to_yaml }}
+
+arin_whois_db_records
+---------------------
+{{ arin_whois_records|parse_arin_whois_records|to_yaml }}

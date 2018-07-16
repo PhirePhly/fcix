@@ -1,0 +1,380 @@
+{% from 'macros.j2' import write_prefix_list %}
+{% from 'macros.j2' import write_communities_table_row %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+     content="width=device-width, initial-scale=1, user-scalable=yes">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+
+
+
+<h1>Configuration of route server {{ cfg.router_id }} at AS{{ cfg.rs_as }}</h1>
+
+<h2>BGP sessions default configuration</h2>
+
+<ul>
+<li><p><strong>{% if cfg.passive %}Passive{% else %}Active{% endif %}</strong> sessions are configured toward neighbors.</p></li>
+
+<li><p>GTSM (Generalized TTL Security Mechanism - <a href="//tools.ietf.org/html/rfc5082">RFC5082</a>) is <strong>{% if cfg.gtsm %}enabled{% else %}disabled{% endif %}</strong> on sessions toward the neighbors.</p></li>
+
+{% if cfg.add_path %}
+<li><p><strong>ADD-PATH</strong> capability (<a href="//tools.ietf.org/html/rfc7911">RFC7911</a>) is negotiaded by default; the route server is configured as "able to send multiple paths to its peer".</p></li>
+{% else %}
+<li><p><strong>ADD-PATH</strong> capability (<a href="//tools.ietf.org/html/rfc7911">RFC7911</a>) is <strong>not</strong> negotiated by default.</p></li>
+{% endif %}
+</ul>
+
+
+
+<h2>Route server general behaviours</h2>
+
+<ul>
+<li><p>Route server ASN is <strong>{% if not cfg.prepend_rs_as %}not {% endif %}prepended</strong> to the AS_PATH of routes announced to clients (<a href="https://tools.ietf.org/html/rfc7947#section-2.2.2.1">RFC7947 section 2.2.2.1</a>).</p></li>
+
+<li><p>Route server <strong>does {% if not cfg.path_hiding %}not{% endif %} implement</strong> path-hiding mitigation techniques (<a href="https://tools.ietf.org/html/rfc7947#section-2.3.1">RFC7947 section 2.3.1</a>).</p></li>
+</ul>
+
+
+
+<h2>Default filtering policy</h2>
+
+
+
+<h3>NEXT_HOP attribute</h3>
+
+<ul>
+<li><p>The route server verifies that the NEXT_HOP attribute of routes received from a client matches the <strong>IP address of the client itself</strong>
+{% if cfg.filtering.next_hop.policy == "strict" %}
+.
+{% else %}
+or one of the <strong>IP addresses of other clients from the same AS</strong>. This "allows an organization with multiple connections into an IXP configured with different IP addresses to direct traffic off the IXP infrastructure through any of their connections for traffic engineering or other purposes." <a href="https://tools.ietf.org/html/rfc7948#section-4.8">RFC7948, section 4.8</a>
+</blockquote>
+{% endif %}
+</p></li>
+</ul>
+
+
+
+<h3>AS_PATH attribute</h3>
+
+<ul>
+<li><p>Routes whose <strong>AS_PATH is longer than {{ cfg.filtering.max_as_path_len }}</strong> ASNs are rejected.</p></li>
+
+<li><p>The <strong>left-most ASN</strong> in the AS_PATH of any route announced to the route server must be the ASN of the announcing client.</p></li>
+
+{% if cfg.filtering.reject_invalid_as_in_as_path %}
+<li><p>Routes whose AS_PATH contains <a href="http://mailman.nanog.org/pipermail/nanog/2016-June/086078.html"><strong>private or invalid ASNs</strong></a> are rejected.</p></li>
+{% endif %}
+
+{% if cfg.filtering.transit_free.action %}
+<li><p>
+Routes with an AS_PATH containing one or more of the following <strong>"transit-free" networks</strong>' ASNs
+{%	if cfg.filtering.transit_free.action == "reject" %}
+are <strong>rejected</strong>.
+{%	else %}
+produce a warning.
+{%	endif %}
+</p>
+<p>
+List of "transit-free" networks' ASNs:
+{%	for asn in cfg.filtering.transit_free.asns %}
+<a href="https://stat.ripe.net/AS{{ asn }}">{{ asn }}</a>{% if not loop.last %}, {% endif %}
+{%	endfor %}
+</p>
+</li>
+{% endif %}
+</ul>
+
+
+
+<h3>IRRDBs prefix/origin ASN enforcement</h3>
+
+<ul>
+<li><p>
+Origin ASN validity is
+{% if not cfg.filtering.irrdb.enforce_origin_in_as_set %}
+<strong>not enforced.</strong>
+{% else %}
+<strong>enforced</strong>. Routes whose origin ASN is not authorized by the client's AS-SET are rejected.
+{% endif %}
+</p></li>
+
+<li><p>Announced prefixes validity is
+{% if not cfg.filtering.irrdb.enforce_prefix_in_as_set %}
+<strong>not enforced</strong>
+{% else %}
+<strong>enforced</strong>. Routes whose prefix is not part of the client's AS-SET are rejected.
+{%	if cfg.filtering.irrdb.allow_longer_prefixes %}
+Longer prefixes that are covered by one entry of the resulting route set are accepted.
+{%	endif %}
+{% endif %}
+</p></li>
+
+{% if cfg.filtering.irrdb.use_rpki_roas_as_route_objects.enabled %}
+<li><p>Use <strong>RPKI ROAs</strong> to validate routes whose origin ASN is authorized by the client's AS-SET but whose prefix is not.</p></li>
+{% endif %}
+
+{% if cfg.filtering.irrdb.use_arin_bulk_whois_data.enabled %}
+<li><p>Use <strong>ARIN Whois DB dump</strong> to validate routes whose origin ASN is authorized by the client's AS-SET but whose prefix is not.</p></li>
+
+<li><p>Database is fetched from {{ cfg.filtering.irrdb.use_arin_bulk_whois_data.source|urlize }}.</p></li>
+{% endif %}
+
+{% if cfg.filtering.irrdb.tag_as_set and
+	(cfg.communities.prefix_present_in_as_set|community_is_set or
+	 cfg.communities.prefix_not_present_in_as_set|community_is_set or
+	 cfg.communities.origin_present_in_as_set|community_is_set or
+	 cfg.communities.origin_not_present_in_as_set|community_is_set or
+	 cfg.communities.prefix_validated_via_rpki_roas|community_is_set or
+	 cfg.communities.prefix_validated_via_arin_whois_db_dump|community_is_set)%}
+<li><p>
+Route <strong>validity state</strong> is signalled to route server clients using the following <strong>BGP communities</strong>:
+<table class="table">
+<thead>
+  <tr>
+    <th>Validity state</th>
+    <th>Standard</th>
+    <th>Extended</th>
+    <th>Large</th>
+  <tr>
+</thead>
+<tbody>
+  {{ write_communities_table_row(cfg.communities.prefix_present_in_as_set, "Prefix is included in client's AS-SET") }} 
+  {{ write_communities_table_row(cfg.communities.prefix_not_present_in_as_set, "Prefix is NOT included in client's AS-SET") }} 
+  {{ write_communities_table_row(cfg.communities.origin_present_in_as_set, "Origin ASN is included in client's AS-SET") }} 
+  {{ write_communities_table_row(cfg.communities.origin_not_present_in_as_set, "Origin ASN is NOT included in client's AS-SET") }} 
+  {{ write_communities_table_row(cfg.communities.prefix_validated_via_rpki_roas, "Prefix matched by a RPKI ROA for the authorized origin ASN") }} 
+  {{ write_communities_table_row(cfg.communities.prefix_validated_via_arin_whois_db_dump, "Prefix matched by an entry of the ARIN Whois DB dump") }}
+  {{ write_communities_table_row(cfg.communities.route_validated_via_white_list, "Route authorized soley because of a client white list entry") }} 
+</tbody>
+</table>
+</p></li>
+{% endif %}
+</ul>
+
+
+
+<h3>RPKI BGP Prefix Origin Validation</h3>
+
+<ul>
+
+<li><p><a href="https://tools.ietf.org/html/rfc6483">RPKI BGP Prefix Origin Validation</a> of routes received by the route server is <strong>{% if cfg.filtering.rpki_bgp_origin_validation.enabled %}enabled{% else %}disabled{% endif %}</strong>.</p></li>
+
+{% if cfg.filtering.rpki_bgp_origin_validation.enabled %}
+{%	if cfg.filtering.rpki_bgp_origin_validation.reject_invalid %}
+<li><p>When an INVALID route is received by the route server, <strong>it is rejected</strong>.</p></li>
+{%	else %}
+<li><p>INVALID routes are not announced to clients.</p></li>
+{%	endif %}
+{% endif %}
+</ul>
+
+
+
+{% if cfg.filtering.irrdb.use_rpki_roas_as_route_objects.enabled or
+	cfg.filtering.rpki_bgp_origin_validation.enabled %}
+<h3>RPKI ROAs</h3>
+
+<ul>
+
+{%	if cfg.rpki_roas.source == "ripe-rpki-validator-cache" %}
+<li><p>RPKI ROAs are fetched from the RIPE RPKI Validator cache file at {{ cfg.rpki_roas.ripe_rpki_validator_url|urlize }}. The following Trust Anchors are used: {{ cfg.rpki_roas.allowed_trust_anchors|join(", ") }}</p></li>
+{%	else %}
+<li><p>RPKI ROAs are supplied using an external program.</p></li>
+{%	endif %}
+</ul>
+{% endif %}
+
+
+
+{% if cfg.filtering.max_prefix.action %}
+<h3>Max-pref limit</h3>
+<ul>
+	<li><p>A <strong>max-prefix limit</strong> is enforced; when it triggers,
+	{%	if cfg.filtering.max_prefix.action == "shutdown" %}
+	the session with the announcing client is <strong>shutdown</strong>.
+{%	elif cfg.filtering.max_prefix.action == "restart" %}
+	the session with the announcing client is <strong>restarted</strong> after {{ cfg.filtering.max_prefix.restart_after }} minutes.
+{%	elif cfg.filtering.max_prefix.action == "block" %}
+	new routes from the announcing client are <strong>discarded</strong>.
+{%	else %}
+	a warning is logged.
+{%	endif %}
+	</p></li>
+
+{%	if cfg.filtering.max_prefix.peering_db.enabled %}
+	<li><p>The limit, if not provided on a client-by-client basis, is learnt from the client's <strong>PeeringDB record</strong>.</p></li>
+{%	endif %}
+	<li><p>If no more specific limits exist for the client, the <strong>general limit</strong> of {{ cfg.filtering.max_prefix.general_limit_ipv4 }} IPv4 routes and {{ cfg.filtering.max_prefix.general_limit_ipv6 }} IPv6 routes is enforced.</p></li>
+</ul>
+{% endif %}
+
+
+
+<h3>Min/max prefix length</h3>
+
+<ul>
+<li>
+<p>Only prefixes whose length is in the following range are accepted by the route server:</p>
+	<ul>
+	<li>IPv4: {{ cfg.filtering.ipv4_pref_len.min }}-{{ cfg.filtering.ipv4_pref_len.max }}</li>
+	<li>IPv6: {{ cfg.filtering.ipv6_pref_len.min }}-{{ cfg.filtering.ipv6_pref_len.max }}</li>
+	</ul>
+</li>
+</ul>
+
+
+
+{% if cfg.filtering.global_black_list_pref %}
+<h3>Rejected prefixes</h3>
+
+<ul>
+<li><p>The following prefixes are <strong>unconditionally rejected</strong>:
+{{ write_prefix_list(cfg.filtering.global_black_list_pref) }}
+</p></li>
+
+<li><p><strong>Bogon prefixes</strong> are rejected too.
+<a data-toggle="collapse" href="#bogonprefixes">Click</a> to expand the list of these prefixes.
+<div class="collapse" id="bogonprefixes">
+{{ write_prefix_list(bogons) }}
+</div>
+</p></li>
+
+<li><p>IPv6 prefixes are accepted only if part of the IPv6 Global Unicast space 2000::/3.</p></li> 
+</ul>
+{% endif %}
+
+
+
+{% if cfg.blackhole_filtering.policy_ipv4 or cfg.blackhole_filtering.policy_ipv6 %}
+<h2>Blackhole filtering</h2>
+
+<ul>
+<li><p>Blackhole filtering of more specific IP prefixes can be requested by tagging them with the following <strong>BGP communities</strong>:
+{%	if cfg.communities.blackholing|community_is_set %}
+{%		for fmt in ("std", "ext", "lrg") %}
+{%			if cfg.communities.blackholing[fmt] %}
+{{ cfg.communities.blackholing[fmt] }}, 
+{%			endif %}
+{%		endfor %}
+{%	endif %}
+65535:666 (<a href="https://tools.ietf.org/html/rfc7999#section-5">BLACKHOLE</a> well-known community)
+</p></li>
+
+<li><p>By default, routes are 
+{%	if cfg.blackhole_filtering.announce_to_client %}
+<strong>propagated</strong> to all the clients unless they have been explicitly configured to not receive them.
+{%	else %}
+<strong>not propagated</strong> to the clients unless they have been explicitly configured to receive them.
+{%	endif %}
+</p></li>
+
+{%	for af in (4, 6) %}
+{%		if af == 4 %}
+{%			set policy="policy_ipv4" %}
+{%			set bn="rewrite_next_hop_ipv4" %}
+{%		else %}
+{%			set policy="policy_ipv6" %}
+{%			set bn="rewrite_next_hop_ipv6" %}
+{%		endif %}
+{%		if cfg.blackhole_filtering[policy] == "propagate-unchanged" %}
+<li><p>IPv{{ af }} routes are propagated <strong>unchanged</strong> to clients.</p></li>
+{%		else %}
+<li><p>IPv{{ af }} routes are propagated to clients after their <strong>NEXT_HOP attribute has been rewritten</strong> to {{ cfg.blackhole_filtering[bn] }}.</p></li>
+{%		endif %}
+{% 	endfor %}
+<li><p>Before being announced to clients, all the routes are tagged with the BLACKHOLE well-known community.
+{%	if cfg.blackhole_filtering.add_noexport %}
+The NO_EXPORT well-known community is also added.
+{%	endif %}
+</p></li>
+
+<li><p>Blackhole filtering requests bypass any RPKI validation check and min/max length check.</p></li>
+{% endif %}
+</ul>
+
+
+
+{% if cfg.graceful_shutdown.enabled %}
+<h2>Graceful BGP session shutdown</h2>
+
+<ul>
+<li><p>Routes tagged with the <strong>GRACEFUL_SHUTDOWN</strong> BGP community (65535:0) have their LOCAL_PREF attribute lowered to {{ cfg.graceful_shutdown.local_pref }}.</p></li>
+</ul>
+{% endif %}
+
+
+
+<h2>Announcement control via BGP communities</h2>
+
+<ul>
+{% if cfg.rfc1997_wellknown_communities.policy == "strict" %}
+<li><p><b>NO_EXPORT</b> and <b>NO_ADVERTISE</b> communities are processed accordingly to RFC1997.</p></li>
+{% else %}
+<li><p>Routes tagged with the <b>NO_EXPORT</b> or <b>NO_ADVERTISE</b> communities received by the route server are propagated to other clients with those communities unaltered.</p></li>
+{% endif %}
+</ul>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Standard</th>
+      <th>Extended</th>
+      <th>Large</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{ write_communities_table_row(cfg.communities.do_not_announce_to_any, "Do not announce to any client") }}
+  {{ write_communities_table_row(cfg.communities.announce_to_peer, "Announce to peer, even if tagged with the previous community") }}
+{% for ann_do_not, descr in [("do_not_announce", "Do not announce"), ("announce", "Announce")] %}
+{%	for lower_higher, op in [("lower", "<="), ("higher", ">")] %}
+{%		set comm = cfg.communities[ann_do_not ~ "_to_peers_with_rtt_" ~ lower_higher ~ "_than"] %}
+  {{ write_communities_table_row(comm, descr ~ "_to peers with RTT " ~ op ~ " than <em>X</em> ms (*)", dyn_val="X") }}
+{%	endfor %}
+{% endfor %}
+  {{ write_communities_table_row(cfg.communities.do_not_announce_to_peer, "Do not announce to peer") }}
+
+  {{ write_communities_table_row(cfg.communities.prepend_once_to_peer, "Prepend the announcing ASN once to peer") }}
+  {{ write_communities_table_row(cfg.communities.prepend_twice_to_peer, "Prepend the announcing ASN twice to peer") }}
+  {{ write_communities_table_row(cfg.communities.prepend_thrice_to_peer, "Prepend the announcing ASN thrice to peer") }}
+
+{% for lower_higher, op in [("higher", ">"), ("lower", "<=")] %}
+{%	for times, times_num in [("once", 1), ("twice", 2), ("thrice", 3)] %}
+{%		set comm = cfg.communities["prepend_" ~ times ~ "_to_peers_with_rtt_" ~ lower_higher ~ "_than"] %}
+{%		if comm|community_is_set %}
+  {{ write_communities_table_row(comm, "Prepend " ~ times ~ " to peers with RTT " ~ op ~ " than <em>X</em> ms (*)", dyn_val="X") }}
+{%		endif %}
+{%	endfor %}
+{% endfor %}
+
+  {{ write_communities_table_row(cfg.communities.prepend_once_to_any, "Prepend the announcing ASN once to any") }}
+  {{ write_communities_table_row(cfg.communities.prepend_twice_to_any, "Prepend the announcing ASN twice to any") }}
+  {{ write_communities_table_row(cfg.communities.prepend_thrice_to_any, "Prepend the announcing ASN thrice to any") }}
+
+  {{ write_communities_table_row(cfg.communities.add_noexport_to_any, "Add NO_EXPORT to any") }}
+  {{ write_communities_table_row(cfg.communities.add_noadvertise_to_any, "Add NO_ADVERTISE to any") }}
+  {{ write_communities_table_row(cfg.communities.add_noexport_to_peer, "Add NO_EXPORT to peer") }}
+  {{ write_communities_table_row(cfg.communities.add_noadvertise_to_peer, "Add NO_ADVERTISE to peer") }}
+
+  </tbody>
+</table>
+
+{% if rtt_based_functions_are_used %}
+* For RTT-based communities, the following values can be used for <em>X</em>: 
+{%	for threshold_val in cfg.rtt_thresholds %}
+{{ threshold_val }}{% if not loop.last %}, {% endif %}
+{%	endfor %}
+{% endif %}
+
+
+</div>
+</body>
+</html>

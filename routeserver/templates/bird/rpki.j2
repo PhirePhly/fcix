@@ -1,0 +1,18 @@
+{% from 'macros.j2' import write_prefix_list %}
+# ---------------------------------------------------------
+# RPKI
+
+{% if cfg.filtering.rpki_bgp_origin_validation.enabled or
+	cfg.filtering.irrdb.use_rpki_roas_as_route_objects.enabled %}
+{%	if cfg.rpki_roas.source == "rtrlib" %}
+# ROAs can be loaded using an external tool: rtrllib
+# https://github.com/rtrlib/bird-rtrlib-cli
+{%	endif %}
+roa table RPKI {
+{%	for roa in rpki_roas %}
+	roa {{ roa.prefix }} max {{ roa.max_len }} as {{ roa.asn }};
+{%	endfor %}
+};
+{% else %}
+# RPKI not used.
+{% endif %}

@@ -1,0 +1,420 @@
+{% from 'macros.j2' import write_prefix_list %}
+{% from 'macros.j2' import del_communities %}
+{% from 'macros.j2' import match_communities %}
+{% from 'macros.j2' import add_communities %}
+{% from 'macros.j2' import match_rtt_communities %}
+# ---------------------------------------------------------
+# COMMON
+
+# This function returns True if 'net' is a bogon prefix
+# or falls within a bogon prefix.
+function prefix_is_bogon()
+prefix set bogons;
+{
+	bogons = [
+{{ write_prefix_list(bogons) }}
+	];
+
+	if net ~ bogons then return true;
+	return false;
+}
+
+# This function returns True if 'net' falls within a
+# prefix contained in the global blacklist (for example,
+# local networks)
+function prefix_is_in_global_blacklist()
+prefix set global_blacklist;
+{
+{% if cfg.filtering.global_black_list_pref %}
+	global_blacklist = [
+{{ write_prefix_list(cfg.filtering.global_black_list_pref) }}
+	];
+
+	if net ~ global_blacklist then return true;
+{% else %}
+	# No prefixes configured under the cfg.filtering.global_black_list_pref section.
+{% endif %}
+	return false;
+}
+
+# This function returns True if the length of 'net' prefix
+# falls within the range 'min'-'max' (included).
+function prefix_len_is_valid (int pref_len_min; int pref_len_max) {
+	if net.len < pref_len_min then return false;
+	if net.len > pref_len_max then return false;
+	return true;
+}
+
+# This function returns True if the AS_PATH contains one or
+# more private/reserved ASN.
+function as_path_contains_invalid_asn() 
+int set invalid_asns;
+{
+	# http://www.iana.org/assignments/as-numbers/as-numbers.xhtml
+	invalid_asns = [
+		# 16-bit
+		0,			# Reserved. RFC7607
+		23456,			# AS_TRANS. RFC6793
+		64496..64511,		# Reserved for use in documentation and sample code. RFC5398
+		64512..65534,		# Reserved for Private Use. RFC6996
+		65535,			# Reserved. RFC7300
+
+		# 32-bit
+		65536..65551,		# Reserved for use in documentation and sample code. RFC5398
+		65552..131071,		# Reserved.
+		4200000000..4294967294, # Reserved for Private Use. [RFC6996]
+		4294967295		# Reserved. RFC7300
+	];
+	return bgp_path ~ invalid_asns;
+}
+
+{% if rtt_based_functions_are_used %}
+# This function returns the RTT measured for the peer given in client_ip.
+# If the RTT is not available it returns 0.
+function get_peer_rtt(ip client_ip) {
+	case client_ip {
+{%	for client in clients|sort(attribute="ip") if client.ip is current_ipver %}
+{%		if "rtt" in client and client["rtt"]|get_normalized_rtt %}
+		{{ client["ip"] }} : return {{ client["rtt"]|get_normalized_rtt }}; # {{ client["rtt"] }}
+{%		endif %}
+{%	endfor %}
+	}
+
+	return 0;
+}
+{% endif %}
+
+# This function scrubs BGP communities used by the route server
+# for signaling purpose toward its clients. (RFC7454, Section 11)
+# It must be applied on routes entering the route server.
+function scrub_communities_in() {
+{% for name in cfg.communities|sort if cfg.communities[name].type == "outbound" %}
+{% if cfg.communities[name]|community_is_set %}
+	# {{ name }}
+{{ del_communities(cfg.communities[name]) }}
+{% endif %}
+{% endfor %}
+{% for name in cfg.communities|sort if cfg.communities[name].type == "internal" %}
+{% if cfg.communities[name]|community_is_set %}
+	# {{ name }}
+{{ del_communities(cfg.communities[name], replace_dyn_val="*") }}
+{% endif %}
+{% endfor %}
+{% for name in cfg.custom_communities|sort %}
+{% if cfg.custom_communities[name]|community_is_set %}
+	# {{ name }}
+{{ del_communities(cfg.custom_communities[name]) }}
+{% endif %}
+{% endfor %}
+{% if "scrub_communities_in"|hook_is_set %}
+	hook_scrub_communities_in();
+{% endif %}
+}
+
+# This function scrubs BGP communities used by clients to instruct
+# the route server to perform some actions.
+# It must be applied on routes leaving the route server.
+function scrub_communities_out() {
+{% for name in cfg.communities|sort if cfg.communities[name].type == "inbound" %}
+{% if cfg.communities[name]|community_is_set %}
+	# {{ name }}
+{{ del_communities(cfg.communities[name], cfg.communities[name].peer_as, replace_dyn_val="*") }}
+{% endif %}
+{% endfor %}
+{% for name in cfg.communities|sort if cfg.communities[name].type == "internal" %}
+{% if cfg.communities[name]|community_is_set %}
+	# {{ name }}
+{{ del_communities(cfg.communities[name], replace_dyn_val="*") }}
+{% endif %}
+{% endfor %}
+{% if "scrub_communities_out"|hook_is_set %}
+	hook_scrub_communities_out();
+{% endif %}
+}
+
+# This function verifies if the route is tagged with one of
+# the blackhole filtering communities.
+function is_blackhole_filtering_request() {
+{% if ( ip_ver == 4 and cfg.blackhole_filtering.policy_ipv4 ) or
+	( ip_ver == 6 and cfg.blackhole_filtering.policy_ipv6 ) %}
+	if (65535, 666) ~ bgp_community then
+		return true;
+{{ match_communities(cfg.communities.blackholing, "return true;") }}
+{% endif %}
+	return false;
+}
+
+# This function must be applied to outgoing routes.
+# It applies the blackhole filtering policy to the current route.
+function apply_blackhole_filtering_policy() {
+{% if ip_ver == 4 and cfg.blackhole_filtering.policy_ipv4 == "propagate-unchanged" %}
+	# Configured policy: propagate-unchanged
+	bgp_community.add((65535, 666));
+{%	if cfg.blackhole_filtering.add_noexport %}
+	# NO_EXPORT
+	bgp_community.add((65535, 65281));
+{%	endif %}
+{% elif ip_ver == 4 and cfg.blackhole_filtering.policy_ipv4 == "rewrite-next-hop" %}
+	# Configured policy: rewrite-next-hop
+	bgp_community.add((65535, 666));
+	bgp_next_hop = {{ cfg.blackhole_filtering.rewrite_next_hop_ipv4 }};
+{%	if cfg.blackhole_filtering.add_noexport %}
+	# NO_EXPORT
+	bgp_community.add((65535, 65281));
+{%	endif %}
+{% elif ip_ver == 6 and cfg.blackhole_filtering.policy_ipv6 == "propagate-unchanged" %}
+	# Configured policy: propagate-unchanged
+	bgp_community.add((65535, 666));
+{%	if cfg.blackhole_filtering.add_noexport %}
+	# NO_EXPORT
+	bgp_community.add((65535, 65281));
+{%	endif %}
+{% elif ip_ver == 6 and cfg.blackhole_filtering.policy_ipv6 == "rewrite-next-hop" %}
+	# Configured policy: rewrite-next-hop
+	bgp_community.add((65535, 666));
+	bgp_next_hop = {{ cfg.blackhole_filtering.rewrite_next_hop_ipv6 }};
+{%	if cfg.blackhole_filtering.add_noexport %}
+	# NO_EXPORT
+	bgp_community.add((65535, 65281));
+{%	endif %}
+{% else %}
+	reject "blackhole filtering requested but no policy given - REJECTING ", net;
+{% endif %}
+{% if "apply_blackhole_filtering_policy"|hook_is_set %}
+	hook_apply_blackhole_filtering_policy({{ ip_ver }});
+{% endif %}
+}
+
+# This function verifies if the current route can be announced to
+# the given client on the basis of the attached control BGP
+# communities.
+function route_can_be_announced_to(int peer_as; ip client_ip; string client_id)
+int client_rtt;
+{
+{% if "route_can_be_announced_to"|hook_is_set %}
+	return hook_route_can_be_announced_to(peer_as, client_ip, client_id);
+{% else %}
+{%	if cfg.communities.do_not_announce_to_peer|community_is_set %}
+	# do_not_announce_to_peer
+{{-		match_communities(cfg.communities.do_not_announce_to_peer, "return false;") }}
+{%	endif %}
+{%	if cfg.communities.announce_to_peer|community_is_set %}
+	# announce_to_peer
+{{-		match_communities(cfg.communities.announce_to_peer, "return true;") }}
+{%	endif %}
+{%	if rtt_based_functions_are_used and
+	   ( cfg.communities.do_not_announce_to_peers_with_rtt_higher_than|community_is_set or
+	     cfg.communities.do_not_announce_to_peers_with_rtt_lower_than|community_is_set or
+	     cfg.communities.announce_to_peers_with_rtt_higher_than|community_is_set or
+	     cfg.communities.announce_to_peers_with_rtt_lower_than|community_is_set ) %}
+	client_rtt = get_peer_rtt(client_ip);
+
+	if client_rtt > 0 then {
+{%		if cfg.communities.do_not_announce_to_peers_with_rtt_higher_than|community_is_set %}
+		# do_not_announce_to_peers_with_rtt_higher_than
+{{			match_rtt_communities(cfg.rtt_thresholds, cfg.communities.do_not_announce_to_peers_with_rtt_higher_than, "client_rtt", ">", "return false;", tabs=2) }}
+{%		endif %}
+{%		if cfg.communities.do_not_announce_to_peers_with_rtt_lower_than|community_is_set %}
+		# do_not_announce_to_peers_with_rtt_lower_than
+{{			match_rtt_communities(cfg.rtt_thresholds, cfg.communities.do_not_announce_to_peers_with_rtt_lower_than, "client_rtt", "<=", "return false;", tabs=2) }}
+{%		endif %}
+{%		if cfg.communities.announce_to_peers_with_rtt_higher_than|community_is_set %}
+		# announce_to_peers_with_rtt_higher_than
+{{			match_rtt_communities(cfg.rtt_thresholds, cfg.communities.announce_to_peers_with_rtt_higher_than, "client_rtt", ">", "return true;", tabs=2) }}
+{%		endif %}
+{%		if cfg.communities.announce_to_peers_with_rtt_lower_than|community_is_set %}
+		# announce_to_peers_with_rtt_lower_than
+{{			match_rtt_communities(cfg.rtt_thresholds, cfg.communities.announce_to_peers_with_rtt_lower_than, "client_rtt", "<=", "return true;", tabs=2) }}
+{%		endif %}
+	}
+
+{%	endif %}
+{%	if cfg.communities.do_not_announce_to_any|community_is_set %}
+	# do_not_announce_to_any
+{{-		match_communities(cfg.communities.do_not_announce_to_any, "return false;") }}
+{%	endif %}
+	return true;
+{% endif %}
+}
+
+# This function prepends the left-most ASN <times> times.
+function do_prepend(int times) {
+	case times {
+		1: bgp_path.prepend(bgp_path.first);
+		2: bgp_path.prepend(bgp_path.first); bgp_path.prepend(bgp_path.first);
+		3: bgp_path.prepend(bgp_path.first); bgp_path.prepend(bgp_path.first); bgp_path.prepend(bgp_path.first);
+	}
+}
+
+# This function verifies if the current route matches one of the
+# control communities in charge of prepending client's ASN.
+function apply_prepend(int peer_as; ip client_ip)
+int client_rtt;
+{
+{% for times in ["once", "twice", "thrice"] %}
+{%	set comm_name = "prepend_" ~ times ~ "_to_peer" %}
+{%	if cfg.communities[comm_name]|community_is_set %}
+	# {{ comm_name }}
+{{-	match_communities(cfg.communities[comm_name], "{ do_prepend(" ~ loop.index ~ "); return true; }") }}
+{%	endif %}
+{% endfor %}
+
+{% if rtt_based_functions_are_used %}
+	client_rtt = get_peer_rtt(client_ip);
+
+	if client_rtt > 0 then {
+{%	for lower_higher, op, order in [("higher", ">", "desc"), ("lower", "<=", "asc")] %}
+{%		for threshold_val in cfg.rtt_thresholds|sort(reverse=(order == "desc")) %}
+{%			for times in ["once", "twice", "thrice"] %}
+{%				set comm_name = "prepend_" ~ times ~ "_to_peers_with_rtt_" ~ lower_higher ~ "_than" %}
+{%				if cfg.communities[comm_name]|community_is_set %}
+		# {{ comm_name }} {{ threshold_val }} ms
+{{-             match_communities(cfg.communities[comm_name], "{ if client_rtt " ~ op ~ " " ~ threshold_val ~ " then\n\t\t\t{ do_prepend(" ~ loop.index ~ "); return true; } }", replace_dyn_val=threshold_val, tabs=2 ) }}
+{%				endif %}
+{%			endfor %}
+{%		endfor %}
+{%	endfor %}
+	}
+{% endif %}
+
+{% for times in ["once", "twice", "thrice"] %}
+{%	set comm_name = "prepend_" ~ times ~ "_to_any" %}
+{%	if cfg.communities[comm_name]|community_is_set %}
+	# {{ comm_name }}
+{{-	match_communities(cfg.communities[comm_name], "{ do_prepend(" ~ loop.index ~ "); return true; }") }}
+{%	endif %}
+{% endfor %}
+
+	return true;
+}
+
+{% if cfg.filtering.rpki_bgp_origin_validation.enabled %}
+# This function adds the BGP communities used to
+# keep track of RPKI validation state.
+# RFC8097 extended communities are used here.
+function add_rpki_community(string comm_name) {
+	if comm_name = "valid" then {
+		bgp_ext_community.add((unknown 0x4300, 0, 0));
+	}
+	if comm_name = "unknown" then {
+		bgp_ext_community.add((unknown 0x4300, 0, 1));
+	}
+	if comm_name = "invalid" then {
+		bgp_ext_community.add((unknown 0x4300, 0, 2));
+	}
+}
+
+# This functions performs RPKI validation of the current
+# route and adds the informative communities.
+function perform_rpki_validation () {
+	case roa_check(RPKI) {
+		ROA_VALID: add_rpki_community("valid");
+		ROA_UNKNOWN: add_rpki_community("unknown");
+		ROA_INVALID: add_rpki_community("invalid");
+	}
+}
+
+# This function returns True if the route is INVALID.
+function route_is_rpki_invalid () {
+	return (unknown 0x4300, 0, 2) ~ bgp_ext_community;
+}
+
+# This function returns True if RPKI INVALID routes
+# should be announced to clients.
+function announce_rpki_invalid_to_client(int client_asn; ip client_ip; string client_id) {
+	{% if "announce_rpki_invalid_to_client"|hook_is_set %}
+	return hook_announce_rpki_invalid_to_client(client_asn, client_ip, client_id);
+	{% else %}
+	return false;
+	{% endif %}
+}
+{% endif %}
+
+# This function adds NO_EXPORT and/or NO_ADVERTISE
+# well-known communities.
+function add_noexport_noadvertise(int peer_as) {
+	{% if cfg.communities.add_noexport_to_any|community_is_set %}
+	# add_noexport_to_any
+	{{ match_communities(cfg.communities.add_noexport_to_any, "{ bgp_community.add((65535, 65281)); }") }}
+	{% endif %}
+	{% if cfg.communities.add_noadvertise_to_any|community_is_set %}
+	# add_noadvertise_to_any
+	{{ match_communities(cfg.communities.add_noadvertise_to_any, "{ bgp_community.add((65535, 65282)); }") }}
+	{% endif %}
+	{% if cfg.communities.add_noexport_to_peer|community_is_set %}
+	# add_noexport_to_peer
+	{{ match_communities(cfg.communities.add_noexport_to_peer, "{ bgp_community.add((65535, 65281)); }") }}
+	{% endif %}
+	{% if cfg.communities.add_noadvertise_to_peer|community_is_set %}
+	# add_noadvertise_to_peer
+	{{ match_communities(cfg.communities.add_noadvertise_to_peer, "{ bgp_community.add((65535, 65282)); }") }}
+	{% endif %}
+}
+
+{% if cfg.communities.reject_cause|community_is_set %}
+function tag_and_reject(int cause; int announcing_asn)
+int dyn_val;
+{
+	# 0: the route must be treated as discarded
+	dyn_val = 0;
+	{{ add_communities(cfg.communities.reject_cause) }}
+
+	# cause: the real cause
+	dyn_val = cause;
+	{{ add_communities(cfg.communities.reject_cause) }}
+
+{%	if cfg.communities.rejected_route_announced_by|community_is_set %}
+	# announcing_asn: the ASN of the peer that announced the route
+	dyn_val = announcing_asn;
+	{{ add_communities(cfg.communities.rejected_route_announced_by) }}
+{%	endif %}
+
+	bgp_local_pref = 1;
+}
+{% endif %}
+
+{% if cfg.graceful_shutdown.enabled %}
+function honor_graceful_shutdown() {
+	if (65535, 0) ~ bgp_community then {
+		bgp_local_pref = {{ cfg.graceful_shutdown.local_pref }};
+	}
+}
+
+function prevent_graceful_shutdown() {
+	if (65535, 0) ~ bgp_community then {
+		bgp_community.delete([(65535, 0)]);
+	}
+}
+{% endif %}
+
+{% if perform_graceful_shutdown %}
+function perform_graceful_shutdown() {
+	bgp_community.add((65535, 0));
+}
+{% endif %}
+
+{% if cfg.filtering.irrdb.use_rpki_roas_as_route_objects.enabled %}
+# This function verifies if there is such a ROA for the
+# current route's origin ASN to validate the announced prefix.
+function prefix_in_rpki_roas_as_route_objects() {
+	case roa_check(RPKI) {
+		ROA_VALID: return true;
+	}
+	return false;
+}
+{% endif %}
+
+{% if cfg.filtering.irrdb.use_arin_bulk_whois_data.enabled %}
+# This function looks up the route's origin ASN in the ARIN
+# Whois DB: if there is such an entry for the current route's
+# origin ASN to validate the announced prefix the function
+# returns True, otherwise False.
+function prefix_in_arin_whois_db() {
+	case bgp_path.last {
+{%		for origin_asn in arin_whois_records|sort %}
+		{{ origin_asn|replace("AS", "") }}: return net ~ ARIN_Whois_db_{{ origin_asn }};
+{%		endfor %}
+	}
+	return false;
+}
+{% endif %}

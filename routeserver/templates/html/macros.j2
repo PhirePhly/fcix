@@ -1,0 +1,42 @@
+{% macro write_prefix_list(prefix_list) %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Prefix</th>
+      <th>More specific</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+{% if prefix_list %}
+{%	for entry in prefix_list if entry.prefix is current_ipver %}
+    <tr>
+      <td>{{ entry.prefix }}/{{ entry.length }}</td>
+      {% if not entry.exact %}
+      {%	if (not entry.ge or entry.ge == entry.length ) and (not entry.le or entry.le == entry.max_length) %}
+      <td>any more specific prefix</td>
+      {%	else %}
+      <td>with len in the
+      {% if not entry.ge %}{{ entry.length }}{% else %}{{ entry.ge }}{% endif %}-{% if not entry.le %}{{ entry.max_length }}{% else %}{{ entry.le }}{% endif %} range</td>
+      {%	endif %}
+      {% else %}
+      <td>only the exact prefix</td>
+      {% endif %}
+      <td>{{ entry.comment }}</td>
+    </tr>
+{%	endfor %}
+{% endif %}
+  </tbody>
+</table>
+{% endmacro %}
+
+{% macro write_communities_table_row(comm, function_descr, dyn_val=None) %}
+{% if comm|community_is_set %}
+  <tr>
+    <td>{{ function_descr|replace("dyn_val", dyn_val) }}</td>
+    <td>{{ comm.std|replace("dyn_val", dyn_val) }}</td>
+    <td>{{ comm.ext|replace("dyn_val", dyn_val) }}</td>
+    <td>{{ comm.lrg|replace("dyn_val", dyn_val) }}</td>
+  </tr>
+{% endif %}
+{% endmacro %}

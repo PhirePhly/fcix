@@ -4,7 +4,7 @@
 
 cd routeserver
 
-source ~/.virtualenv/arouteserver/bin/activate
+source ~/.virtualenvs/arouteserver/bin/activate
 arouteserver bird --ip-ver 4 -o RS1.bird.conf --cfg ./arouteserver.yml
 arouteserver bird --ip-ver 6 -o RS1.bird6.conf --cfg ./arouteserver.yml
 

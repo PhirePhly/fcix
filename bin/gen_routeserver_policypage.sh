@@ -4,7 +4,7 @@
 
 cd routeserver
 
-source ~/.virtualenv/arouteserver/bin/activate
+source ~/.virtualenvs/arouteserver/bin/activate
 
 arouteserver html -o ../www/rs-policy.html --cfg ./arouteserver.yml
 

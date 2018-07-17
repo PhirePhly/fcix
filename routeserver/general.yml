@@ -50,7 +50,7 @@ cfg:
       use_arin_bulk_whois_data:
         enabled: false
     max_prefix:
-      action: shutdown
+      action: restart
       peering_db:
         enabled: true
     reject_policy:

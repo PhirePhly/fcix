@@ -10,30 +10,33 @@ This makes your peer unhappy because your peering link suddenly becomes an integ
 
 The key to correcting this is _filtering_.
 When you set up a peering session with another network, you should clearly agree on which prefixes you're willing to accept from them and which prefixes you intend to send them. 
+You then don't trust each other and filter such that only those prefixes are accepted on the receiving end.
 The problem with trying to manage this agreed-upon list of prefixes manually is that it means that every time you add a new block of IP addresses to your network, you need to contact every one of your transit providers and peers and try and get them to update their prefix filters on what they accept from you;
 a trivial task for maybe the smallest of networks, but it doesn't scale.
 
 To help automate this task, the Internet Routing Registry (IRR) and the Routing Policy Specification Language (RPSL) were developed to allow you to, in a formal way, describe your routing policy and post it online.
-This is done by the network of [mutiple IRR databases](http://www.irr.net/docs/list.html) (notable ones include radb, altdb, and those run by the Regional Internet Registries) who allow you to create RPSL objects in their database, which they then serve to others answering their whois queries.
+This is done by the network of [mutiple IRR databases](http://www.irr.net/docs/list.html) (notable ones include radb, altdb, and those run by the Regional Internet Registries) who allow you to create RPSL objects in their database, which they then serve to others answering their whois queries generating BGP filters.
 
 One of the most notable problems with RPSL is that it was designed as a fully expressive domain specific language to entirely describe your _entire_ routing policy.
 Not only what prefixes you plan to originate and transit (barring any accidental typos in your BGP configs) but RPSL tries to support describing all of your routers, and your peering connections, and how you use BGP communities, so RPSL ultimately has become a relatively complex beast of a language.
 This is a problem because, since using IRR is relatively optional in most cases online, making the notation for it prohibitively complex to be able to entirely cover your routing policy just means it became impenetrable and any networks without a deep bench of network engineers simply ignored it.
 
-This article hopes to correct this failing of RPSL. 
+This article hopes to correct this failing of RPSL by being a simple, step-by-step, introduction to the bare minimum of IRR needed to enable your peers to filter your prefixes while not costing you any money.
 
 If you would like to follow the original vision of IRR and entirely describe your routing config to the level of detail that allows you to entirely synthesize your router's BGP config from whois queries, all the more power to you.
 This article won't cover that.
-Trying to dive into all of RPSL and talk about every knob available on it makes it seem too complicated, but if we only touch on the parts needed to enable others to generate prefix filters for your network, it's already a step forward for the Internet as a whole.
+Trying to dive into all of RPSL and talk about every knob available on it makes it seem too complicated, but if we only touch on the parts needed to enable others to generate prefix filters for your network, it's not prohibitively difficult.
 
 The rest of the article will be covering a bare-bones RPSL config for a basic network, with maybe a few downstream transit customers.
 We'll assume that you aren't consuming RPSL from the IRR yourself, which is probably reasonable for your router configs, but you likely will want to look into how to generate filtering yourself for your peer's prefixes.
 
-The first step is to select which IRR database you'd like to use to port your RPSL objects in.
+# Selecting an IRR Database
+
+The first step is to select which IRR database you'd like to use to host your RPSL objects.
 There is a movement to having the IRR databases managed (and verified) by the five RIR (Regional Internet Registries), so it's likely the most preferable option would be to try and use whichever RIR is local to your network.
 The issue there is that the support for IRR is inconsistent per RIR, usually limited to their customers, and each has their own set of details and restrictions, so writing one guide to cover all five is more difficult.
-The second option for which IRR database to use would be RADB, which was historically the incumbent, but they charge $500 per year for an account, so unless you're *really* passionate about IRR filtering or willing to pay $500/year for a nice web front-end, RADB might not be a good choice.
-Since we want this guide wants to be applicable to as many networks as possible, we will be using the [AltDB](http://altdb.net/) server;
+The second option for which IRR database to use would be RADB, which is the most popular, but they charge $500 per year for an account, so unless you're *really* passionate about IRR filtering or willing to pay $500/year for a nice web front-end to creating IRR objects, RADB might not be a good choice.
+Since we want this guide wants to be applicable to as many networks as possible, and we're not willing to expect networks to spend money implementing IRR filtering just for the good of the rest of the Internet, we will be using the [AltDB](http://altdb.net/) server;
 maybe not the best choice, but AltDB doesn't have any special requirements about which networks it will serve, is region neutral, and most importantly, free.
 
 # The process for posting your prefixes in Six Easy Steps
@@ -50,7 +53,7 @@ maybe not the best choice, but AltDB doesn't have any special requirements about
 Your maintainer (`mntner`) object is the IRR equivalent of your user account, so this is where you define what person (or organizational role, such as the Network Operations Center) is responsible for creating and deleting objects for your autonomous system.
 Depending on which IRR database you select, the exact requirements on the formatting for your maintainer object will vary, but for this example we're specifically using AltDB, so their recommended format will be used.
 
-To create the `mntner` object (as well as all the rest of the IRR objects later), you will first generate the contents of the object, and then send it in the body of a plain text email to <auto-dbm@altdb.net>.
+To create the `mntner` object (as well as all the rest of the IRR objects later), you will first create the contents of the object, and then paste the text of each object in the body of a plain text email to <auto-dbm@altdb.net>.
 This email address is the IRR daemon which automatically processes IRR objects submitted to AltDB and adds properly formatted ones to the IRR database.
 In this case of initially submitting your `mntner` object, since you don't _already_ have an account, it will get rejected, but automatically forwarded to the database admins to manually review and approve.
 Once they approve your `mntner` object and add it for you, you're able to handle all of the rest of your object add/deletions automatically just emailing auto-dbm.
@@ -100,7 +103,8 @@ If you'd like to allow multiple accounts to manage this `mntner` object, simply 
 `changed:    janedoe@example.com 20180711` - This is, by convention, the change log of who last updated this object and on what date (as YYYYMMDD).
 Multiple `changed` tags are even allowed, if you would prefer to keep the full trail of who modified objects when, but that's a policy your network needs to decide on its own.
 
-`source:     ALTDB` - Every object needs to be tagged with which IRR database they're originally from, so this field needs to be updated to match whichever IRR database you're using to submit your objects.
+`source:     ALTDB` - Every object needs to be tagged with which IRR database they're originally from, so since this `mntner` object is getting submitted to AltDB, that's what we put.
+If you're using a different IRR database, you'll need to change this line on all of the examples.
 
 String all of that together (updated to match your organization), paste it in an email to <auto-dbm@altdb.net>, press send, and you've taken your first step towards IRR paradise!
 Give the AltDB admins a few days to review your `mntner` request (since they're doing it in their spare time), and you should ultimately hear back that your object is approved.
@@ -127,7 +131,7 @@ This is also all generally documented per object class with some explanation in 
 # Step 2: Document Your Autonomous System's Routing Policy
 
 Now that you have what you might call a user account for your IRR database of choice, the next steps will be to start populating it with all the objects needed to describe your network.
-This begins by creating the `aut-num` autonomous system number object, which will be used to tag each prefix for which AS it comes from, and lists what sets of prefixes are exported from this AS to any of its peers.
+This begins by crafting the `aut-num` autonomous system number object, which will be used to tag each prefix for which Autonomous System it comes from, and specifies what sets of prefixes are exported from this AS to any of its peers.
 
 ```
 aut-num:    AS64496
@@ -167,7 +171,7 @@ And finally "announce AS64496:AS-ALL" means that to the described set of peers (
 You'll be needing this tag on every object, so embrace it.
 
 At this point, you've created an object for your actual autonomous system, except that there's still no IP address blocks tagged to it, and we've described a routing policy using an `as-set` list of ASNs which we haven't defined.
-Explaining this part of RPSL is a little tricky, since `aut-num` export statements generally reference `as-sets`, which also reference `aut-nums`, and export statements can get _extremely_ complicated since they allow all sorts of boolean logic.
+Explaining this part of RPSL is a little tricky, since `aut-num` export and mp-export statements generally reference `as-sets`, which also reference `aut-nums`, and export statements can get _extremely_ complicated since they allow all sorts of boolean logic.
 For example, you can create multiple `as-set` objects, then define export statements per peer with different sets of ASNs exported per peer, ANDed together with individual prefixes and `route-set` objects, which are _sets_ of individual prefixes.
 This example just included one export policy for all peers, which is probably pretty good for most networks.
 
@@ -188,6 +192,7 @@ There are a lot of networks which just try and name their `as-set` objects somet
 To make sure that all of your `as-set` object names are unique, you should take advantage of the fact that you've already paid an RIR money to ensure that your ASN is unique, and preface the `as-set` with your `aut-num` object name.
 You follow this with a colon, and "AS-" to easily identify this as an `as-set` as opposed to a `route-set` or some other sort of object.
 You can finally apply a useful name for the set such as "ALL" to cover yourself and all your customers, or "CUSTOMERS" to cover your customers but not yourself. 
+(i.e. `AS64496:AS-ALL` or `AS64496:AS-CUSTOMERS`)
 
 ```
 as-set:     AS64496:AS-ALL
@@ -200,7 +205,7 @@ changed:    janedoe@example.com 20180711
 source:     ALTDB
 ```
 
-The only two new lines unique to the `as-set` is the `as-set` line which defines the name which this set of ASNs is referenced by, and the list of `members`.
+The only two new lines unique to the `as-set` is the `as-set:` line which defines the name which this set of ASNs is referenced by, and the list of `members`.
 
 If you were setting up this "ALL" set before you had any transit customers, your list of members would be real short: `members: AS64496`. On the other hand, you can include as many lines of members as you like, so for each additional `aut-num` you would like to include, you can either add a new `members` line or add them to an existing comma separated line.
 

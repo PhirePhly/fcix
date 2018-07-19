@@ -19,7 +19,9 @@ Sure. See the [connect](/connect/) page.
 
 ### My network isn't in Hurricane Electric FMT2; can I still join?
 
-No. We generally can't support VPN tunnels into the IXP. That's just more work for us without any actual routing improvement for the Internet. 
+No. We generally can't support VPN tunnels into the IXP.
+That's just more work for us without any actual routing improvement for the Internet. 
+We are planning an expansion into HE FMT1, so please contact us if you're interested in that or any other bay area expansion.
 
 ### What's the Monthly Recurring Cost for joining FCIX?
 
@@ -35,10 +37,12 @@ Yes! We're in the process of migrating to some Arista 7050-64s, so we've got 10G
 
 It isn't polite.
 
-### Why are you using a private ASN for an IX?
+### Do you support BCP214?
 
-FCIX is a very budget focused organization, so we originally started using a private use ASN. Our community has put together the money and funded a global ASN, so we are actually in the process of migrating to a real ASN soon!
+Yes! Despite being a cabal, we take blackholing of traffic very seriously, so BGP sessions are forced down and traffic drained before ports are taken offline for service.
 
-### Why are you using AMPRnet IPv4 space?
+### Do the route servers implement filtering?
 
-FCIX was originally meant to just be an exchange for a few amateurs who happened to all run networks in the same aisle of a datacenter. That plan very quickly went out the window, which started work on the paperwork to get actual address blocks allocated for the exchange. Those prefixes have been received from ARIN, and a renumbering of the exchange is in the works.
+Yes! Our route servers support IRR filtering and community-based redistribution filtering.
+For more information on IRR filtering, see [our whitepaper on a quickstart to IRR](/whitepaper/2018/07/14/intro-to-irr-rpsl.html).
+For more information on what communities our route servers support, see [the route server policy page](/rs-policy.html).

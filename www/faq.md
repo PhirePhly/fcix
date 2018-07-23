@@ -11,7 +11,10 @@ We also call ourselves the Oligarchs of Aisle Six, but that's obviously not true
 
 ### Are you trying to compete with other Internet Exchanges in the Bay Area?
 
-No. If you're looking to join a local IX with a valuable mix of major members, we strongly encourage you to join [SFMIX](https://sfmix.org/). We're more or less just a group of network engineers trying to avoid our cross connect fees going quadratic. If you're a network with zero budget for ports on Internet Exchanges, then you're likely a good candidate for the Cabal. 
+No.
+If you're looking to join a local IX with a valuable mix of major members, we strongly encourage you to join [SFMIX](https://sfmix.org/).
+We founded FCIX as an IXP option for the smallest of networks still interested in participating in IXP peering.
+If you're a network with zero budget for ports on Internet Exchanges, then you're likely a good candidate for the Cabal. 
 
 ### Can I join FCIX?
 
@@ -31,7 +34,7 @@ Don't worry; we take our level of service at these prices very seriously, and wi
 
 ### Do you have anything faster than 1G?
 
-Yes! We're in the process of migrating to some Arista 7050-64s, so we've got 10G ports available. It wouldn't really be a cabal without 10G Ethernet, now would it?
+Yes! We just migrated to a pair of Arista 7050-64s, so we've got 10G ports available. It wouldn't really be a cabal without 10G Ethernet, now would it?
 
 ### How do you pronounce FCIX?
 

@@ -10,7 +10,7 @@ Since FCIX is a project started and run solely by volunteers, what we do wouldn'
 
 * [Hurricane Electric](https://he.net/)
 * [Arista Networks](https://www.arista.com/)
-* [FlexOptix](https://www.flexoptix.net/)
+* [Flexoptix](https://www.flexoptix.net/)
 
 ## Swag
 

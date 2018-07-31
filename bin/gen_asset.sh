@@ -6,11 +6,11 @@
 # Print the as-set header
 cat <<EOF
 as-set:     AS33495:AS-MEMBERS
-descr:      All as-sets listed on PeeringDB for FCIX participants
+descr:      All objects for FCIX participants
 EOF
 
 # For each participant in the database
-tail -n +2 participants.tsv | \
+{ tail -n +2 participants.tsv | \
 # Pull out their ASN
 awk -F '\t' '{print $3}' | \
 # Combine them into one comma separated list
@@ -26,7 +26,13 @@ tr " " "\n" | \
 # Strip the RIPE:: or ARIN:: prefixes that some people put in their IRR names
 sed 's/^.*:://' | \
 # Prepend the RPSL syntax for as-set members
-sed 's/^/members:    /g'
+sed 's/^/members:    /g';
+# For each participant in the database
+tail -n +2 participants.tsv | \
+# Pull out their ASN as an RPSL member
+awk -F '\t' '{print "members:    AS" $3}'; } | \
+# Sort and deduplicate the as-set members
+sort -u
 
 # Print footer of as-set
 cat <<EOF

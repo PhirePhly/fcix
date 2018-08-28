@@ -21,4 +21,5 @@ Name:
 ASN:
 How I heard about FCIX:
 Cabinet Number:
+Desired port speed: [1G-LX|10G-LR]
 ```

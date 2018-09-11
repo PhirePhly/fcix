@@ -21,7 +21,6 @@ cfg:
       action: reject
       asns:
       - 174
-      - 209
       - 286
       - 701
       - 1239
@@ -39,7 +38,6 @@ cfg:
       - 6830
       - 6939
       - 7018
-      - 12956
     irrdb:
       enforce_origin_in_as_set: true
       enforce_prefix_in_as_set: true

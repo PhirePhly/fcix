@@ -9,13 +9,6 @@ permalink: /FAQ/
 No. We started calling ourselves a cabal in jest, and the name stuck.
 We also call ourselves the Oligarchs of Aisle Six, but that's obviously not true either.
 
-### Are you trying to compete with other Internet Exchanges in the Bay Area?
-
-No.
-If you're looking to join a local IX with a valuable mix of major members, we strongly encourage you to join [SFMIX](https://sfmix.org/).
-We founded FCIX as an IXP option for the smallest of networks still interested in participating in IXP peering.
-If you're a network with zero budget for ports on Internet Exchanges, then you're likely a good candidate for the Cabal. 
-
 ### Can I join FCIX?
 
 Sure. See the [connect](/connect/) page.

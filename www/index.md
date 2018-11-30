@@ -8,4 +8,4 @@ layout: home
 
 Except we're not particularly secret, nor cliquey. We're quite welcoming, actually.
 
-
+The Fremont Cabal Internet Exchange is an [Internet Exchange Point](https://en.wikipedia.org/wiki/Internet_exchange_point) based out of the Hurricane Electric FMT2 data center.

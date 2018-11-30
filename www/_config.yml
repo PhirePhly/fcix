@@ -16,9 +16,8 @@
 title: Fremont Cabal Internet Exchange
 email: contact@fcix.net
 description: >- # this means to ignore newlines until "baseurl:"
-  The FCIX is a best-effort Internet Exchange originally set up to reduce
-  the number of needed cross-connects between a group of friends in the
-  Hurricane Electric FMT2 colo facility.
+  The FCIX is a best-effort Internet Exchange focused on promoting peering
+  and interconnection in the East Bay of California.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: FremontCabalIX

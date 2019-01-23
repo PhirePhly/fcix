@@ -13,25 +13,21 @@ We also call ourselves the Oligarchs of Aisle Six, but that's obviously not true
 
 Sure. See the [connect](/connect/) page.
 
-### My network isn't in Hurricane Electric FMT2; can I still join?
-
-No. We generally can't support VPN tunnels into the IXP.
-That's just more work for us without any actual routing improvement for the Internet. 
-We are planning an expansion into HE FMT1, so please contact us if you're interested in that or any other bay area expansion.
-
 ### What's the Monthly Recurring Cost for joining FCIX?
 
 $0/mo for 1x1Gbps, double that for anything faster.
 
 Don't worry; we take our level of service at these prices very seriously, and will always make sure to refund port fees for any outages suffered on the FCIX.
 
-### Do you have anything faster than 1G?
-
-Yes! We just migrated to a pair of Arista 7050-64s, so we've got 10G ports available. It wouldn't really be a cabal without 10G Ethernet, now would it?
-
 ### How do you pronounce FCIX?
 
 It isn't polite.
+
+### Can I get a VPN tunnel into FCIX?
+
+...
+
+No.
 
 ### Do you support BCP214?
 

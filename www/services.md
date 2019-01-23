@@ -27,6 +27,7 @@ server amorite.invalid.network iburst
 server time.nullroutenetworks.com iburst
 server clock.fmt.he.net iburst
 server clepsydra.kjsl.com iburst
+server ntp1.thelifeofkenneth.com iburst
 ```
 
 This list was formatted to allow to be directly added to ntp.conf

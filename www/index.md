@@ -8,4 +8,9 @@ layout: home
 
 Except we're not particularly secret, nor cliquey. We're quite welcoming, actually.
 
-The Fremont Cabal Internet Exchange is an [Internet Exchange Point](https://en.wikipedia.org/wiki/Internet_exchange_point) based out of the Hurricane Electric FMT2 data center.
+The Fremont Cabal Internet Exchange is an [Internet Exchange Point](https://en.wikipedia.org/wiki/Internet_exchange_point) in the California bay area based out of the following locations:
+
+* [Hurricane Electric FMT2](http://he.net/tour/fremont2.html)
+* [Hurricane Electric FMT1](http://he.net/tour/fremont1.html)
+
+![Traffic graph](/traffic.png)

@@ -11,7 +11,7 @@ www-dev: www
 
 www-install: www
 	cd www; JEKYLL_ENV=production jekyll build
-	rsync -av --delete-delay www/_site/ kwfwebsrvr:~/www/fcix.net
+	rsync -av --delete-delay www/_site/ fcixhttp.fcix.net:~/fcix.net
 
 conf:
 	bin/gen_routeserver_clients.sh

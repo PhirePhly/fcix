@@ -37,7 +37,7 @@
 # Host running IRRD software used by bgpq3
 # (bgpq3 -h argument).
 # Use "host:port" to specify alternate port.
-#bgpq3_host: "rr.ntt.net"
+bgpq3_host: "whois.radb.net"
 
 # Sources used by bgpq3
 # (bgpq3 -S argument).

@@ -5,17 +5,17 @@
 
 SRC_DIR=/home/kenneth/src/fcix
 ZONEDIR="/etc/bind/zones"
-NSPRIMARY="ns1.phirephly.design"
+NSPRIMARY="ns1.phirephly.design."
 
 SOAPOLICY="\$TTL 1h ; Default TTL
-@	IN	SOA	$NSPRIMARY	noc.fcix.net (
+@	IN	SOA	$NSPRIMARY	noc.fcix.net. (
 				`date '+%Y%m%d%H'`	; Serial
 				15m	; Refresh
 				5m	; Retry
 				1w	; Expire
 				1m )	; Negative Cache TTL
 
-@	IN	NS	$NSPRIMARY."
+@	IN	NS	$NSPRIMARY"
 
 
 cd $SRC_DIR

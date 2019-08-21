@@ -1,9 +1,29 @@
 #!/bin/bash
 #
 # Generate DNS zone records for participants
-# Kenneth Finnegan, 2018
+# Kenneth Finnegan, 2019
+#
+# On the primary nameserver, schedule this script to run by crontab:
+#   12 */6 * * *    /opt/fcix/bin/gen_ixpdns.sh
+#
+# In the /etc/bind/named.conf.local configure these zones:
+#   zone "ixp.fcix.net." {
+#           type master;
+#           file "/etc/bind/zones/db.ixp.fcix.net";
+#   };
+#   
+#   zone "238.80.206.in-addr.arpa." {
+#           type master;
+#           file "/etc/bind/zones/db.206.80.238";
+#   };
+#   
+#   zone "1.9.0.0.4.0.5.0.1.0.0.2.ip6.arpa." {
+#           type master;
+#           file "/etc/bind/zones/db.2001.504.91";
+#   };
 
-SRC_DIR=/home/kenneth/src/fcix
+
+SRC_DIR=/opt/fcix
 ZONEDIR="/etc/bind/zones"
 NSPRIMARY="ns1.phirephly.design."
 

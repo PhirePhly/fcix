@@ -39,7 +39,7 @@ SOAPOLICY="\$TTL 1h ; Default TTL
 
 
 cd $SRC_DIR
-git pull
+/usr/bin/git pull
 
 #
 # Generate forward zone to produce an A and AAAA record for each ASnnnn.ixp.fcix.net record
@@ -120,4 +120,4 @@ cat >>$ZONEDIR/db.2001.504.91 <<EOF
 
 EOF
 
-service bind9 reload
+/usr/sbin/service bind9 reload

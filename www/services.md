@@ -26,6 +26,7 @@ All routes advertised to the FCIX route servers, or AS7034 directly, will be ser
 Notable DNS servers on the exchange include:
 
 * J Root
+* M Root
 * B gTLD (.com and .net)
 
 ## NTP Servers
@@ -40,3 +41,6 @@ server clepsydra.kjsl.com iburst
 server ntp1.thelifeofkenneth.com iburst
 ```
 
+## OSS Mirror
+
+One of the FCIX members hosts a high performance software mirror, which other members might consider using for their systems: https://mirror.xtom.com/

@@ -43,4 +43,4 @@ server ntp1.thelifeofkenneth.com iburst
 
 ## OSS Mirror
 
-One of the FCIX members hosts a high performance software mirror, which other members might consider using for their systems: https://mirror.xtom.com/
+One of the FCIX members hosts a high performance software mirror, which other members might consider using for their systems: [https://mirror.xtom.com](https://mirror.xtom.com/)

@@ -28,6 +28,7 @@ Notable DNS servers on the exchange include:
 * J Root
 * M Root
 * B gTLD (.com and .net)
+* AS112 (RFC1918 PTRs, etc)
 
 ## NTP Servers
 

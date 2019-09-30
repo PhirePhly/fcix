@@ -59,18 +59,10 @@ cfg:
   rfc1997_wellknown_communities:
     policy: pass
   communities:
-    prefix_present_in_as_set:
-      std: '64512:11'
-      ext: rt:64512:11
-      lrg: rs_as:64512:11
     prefix_not_present_in_as_set:
       std: '64512:10'
       ext: rt:64512:10
       lrg: rs_as:64512:10
-    origin_present_in_as_set:
-      std: '64512:21'
-      ext: rt:64512:21
-      lrg: rs_as:64512:21
     origin_not_present_in_as_set:
       std: '64512:20'
       ext: rt:64512:20

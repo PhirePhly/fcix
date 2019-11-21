@@ -48,8 +48,12 @@ cfg:
         enabled: true
       use_arin_bulk_whois_data:
         enabled: false
+    rpki_bgp_origin_validation:
+      enabled: True
+      reject_invalid: True
     max_prefix:
       action: restart
+      restart_after: 30
       peering_db:
         enabled: true
     reject_policy:

@@ -1,4 +1,4 @@
-Org_Number Organization	ASN
+Org_Number	Organization	ASN
 2	PhirePhly Design	7034
 3	Mojo Networks	7247
 4	Null Route Networks	13925
@@ -51,6 +51,6 @@ Org_Number Organization	ASN
 51	Fritz Labs	398065
 52	HASHPOWER LDA	47787
 53	Digitalmonks LLC	207972
-55	Verus Corporation	26156	MNVOIP
-56	Paul Bunyan Communications	14371	MNVOIP
+55	Verus Corporation	26156
+56	Paul Bunyan Communications	14371
 252	AS112	112

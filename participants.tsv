@@ -1,57 +1,57 @@
 Org_Number	Organization	ASN	POP
-2	PhirePhly Design	7034
-3	Mojo Networks	7247
-4	Null Route Networks	13925
-5	Loma Broadband	64260
-6	Heaven Express, LLC	396480
-7	Bungi Communications	6596
-8	HalNet	29962
-9	Hurricane Electric	6939
-10	Little Moe, LLC	43126
-11	Invalid Network	53758
-12	Gushi Systems	393507
-13	Two P	6140
-14	WestConnect Communications	53356
-15	The eXperimental Computing Facility at UC Berkeley	26073
-16	xTom	62805
-17	Loligo Cache Systems	11893
-18	VeriSign Global Registry Services	26415
-19	RackAloha	31807
-20	Archeo Futurus, Inc.	36584
-21	UNMETERED	54133
-22	Sky Fiber Internet	32212
-23	unWired Broadband	33548
-24	aussie.net	7175
-25	Sail Internet	396097
-26	Wholesale Internet	32097
-27	The Vegetable Group	397138
-28	xTom DNS	6233
-29	RixCloud	64271
-30	Converse in Code Inc.	32864
-31	Ridge Wireless Inc.	33452
-32	Auth-Servers	35829
-33	The Daedelus. Group	17197
-34	Tekify Fiber and Wireless	46886
-35	6connect, Inc	8038
-36	Whale Blue	138997
-37	Kirino LLC	41378
-38	WIDE (M Root)	7500
-39	KPFA	397715
-40	Linux Global	397781
-41	Linux Global	397781
-42	Williamslabs LLC	397990
-43	Tiger Technologies	47002
-44	Opus One	6373
-45	Your Town Online, Inc	11472
-46	Minnesota VoIP	32621
-47	Joe's Datacenter, LLC	19969
-48	Misaka Network, Inc.	57695
-49	Arrow Group Inc.	20119
-50	Xiber LLC	393950
-51	Fritz Labs	398065
-52	HASHPOWER LDA	47787
-53	Digitalmonks LLC	207972
+2	PhirePhly Design	7034	HEFMT2
+3	Mojo Networks	7247	HEFMT2
+4	Null Route Networks	13925	HEFMT2
+5	Loma Broadband	64260	HEFMT2
+6	Heaven Express, LLC	396480	HEFMT2
+7	Bungi Communications	6596	HEFMT2
+8	HalNet	29962	HEFMT2
+9	Hurricane Electric	6939	HEFMT2
+10	Little Moe, LLC	43126	HEFMT2
+11	Invalid Network	53758	HEFMT2
+12	Gushi Systems	393507	HEFMT2
+13	Two P	6140	HEFMT2
+14	WestConnect Communications	53356	HEFMT2
+15	The eXperimental Computing Facility at UC Berkeley	26073	HEFMT2
+16	xTom	62805	HEFMT2
+17	Loligo Cache Systems	11893	HEFMT2
+18	VeriSign Global Registry Services	26415	HEFMT2
+19	RackAloha	31807	HEFMT2
+20	Archeo Futurus, Inc.	36584	HEFMT2
+21	UNMETERED	54133	HEFMT2
+22	Sky Fiber Internet	32212	HEFMT2
+23	unWired Broadband	33548	HEFMT2
+24	aussie.net	7175	HEFMT2
+25	Sail Internet	396097	HEFMT2
+26	Wholesale Internet	32097	HEFMT2
+27	The Vegetable Group	397138	HEFMT2
+28	xTom DNS	6233	HEFMT2
+29	RixCloud	64271	HEFMT2
+30	Converse in Code Inc.	32864	HEFMT2
+31	Ridge Wireless Inc.	33452	HEFMT2
+32	Auth-Servers	35829	HEFMT2
+33	The Daedelus. Group	17197	HEFMT2
+34	Tekify Fiber and Wireless	46886	HEFMT2
+35	6connect, Inc	8038	HEFMT2
+36	Whale Blue	138997	HEFMT2
+37	Kirino LLC	41378	HEFMT2
+38	WIDE (M Root)	7500	HEFMT2
+39	KPFA	397715	HEFMT2
+40	Linux Global	397781	HEFMT2
+41	Linux Global	397781	HEFMT2
+42	Williamslabs LLC	397990	HEFMT2
+43	Tiger Technologies	47002	HEFMT2
+44	Opus One	6373	HEFMT2
+45	Your Town Online, Inc	11472	HEFMT2
+46	Minnesota VoIP	32621	HEFMT2
+47	Joe's Datacenter, LLC	19969	HEFMT2
+48	Misaka Network, Inc.	57695	HEFMT2
+49	Arrow Group Inc.	20119	HEFMT2
+50	Xiber LLC	393950	HEFMT2
+51	Fritz Labs	398065	HEFMT2
+52	HASHPOWER LDA	47787	HEFMT2
+53	Digitalmonks LLC	207972	HEFMT2
 55	Verus Corporation	26156	MNVOIP
 56	Paul Bunyan Communications	14371	MNVOIP
 57	EMM Consulting, LLC	53612	HEFMT2
-252	AS112	112
+252	AS112	112	HEFMT2

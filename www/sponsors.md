@@ -11,6 +11,7 @@ Since FCIX is a project started and run solely by volunteers, what we do wouldn'
 * [Hurricane Electric](https://he.net/)
 * [Arista Networks](https://www.arista.com/)
 * [Flexoptix](https://www.flexoptix.net/)
+* [Minnesota VoIP](http://www.mnvoip.com/)
 
 ## Swag
 

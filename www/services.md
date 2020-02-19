@@ -25,9 +25,7 @@ All routes advertised to the FCIX route servers, or AS7034 directly, will be ser
 
 Notable DNS servers on the exchange include:
 
-* J Root
 * M Root
-* B gTLD (.com and .net)
 * AS112 (RFC1918 PTRs, etc)
 
 ## NTP Servers

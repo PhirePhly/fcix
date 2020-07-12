@@ -71,14 +71,6 @@ cfg:
       std: '64512:20'
       ext: rt:64512:20
       lrg: rs_as:64512:20
-    prefix_validated_via_rpki_roas:
-      std: '64512:31'
-      ext: rt:64512:31
-      lrg: rs_as:64512:31
-    route_validated_via_white_list:
-      std: '64512:41'
-      ext: rt:64512:41
-      lrg: rs_as:64512:41
     do_not_announce_to_any:
       std: 0:rs_as
       ext: rt:0:rs_as

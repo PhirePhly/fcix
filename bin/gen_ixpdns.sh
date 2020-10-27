@@ -35,7 +35,8 @@ SOAPOLICY="\$TTL 1h ; Default TTL
 				1w	; Expire
 				1m )	; Negative Cache TTL
 
-@	IN	NS	$NSPRIMARY"
+@	IN	NS	$NSPRIMARY
+@	IN	NS	ns-global.kjsl.com."
 
 
 cd $SRC_DIR

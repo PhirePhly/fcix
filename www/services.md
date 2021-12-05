@@ -21,25 +21,3 @@ All routes advertised to the FCIX route servers, or AS7034 directly, will be ser
 * Any routes tagged with the `no-export` community (`65281:7034` will add this community specifically towards AS7034)
 * Any routes from AS6939, because they're huge.
 
-## DNS Servers
-
-Notable DNS servers on the exchange include:
-
-* M Root
-* AS112 (RFC1918 PTRs, etc)
-
-## NTP Servers
-
-The following NTP servers are directly connected to FCIX:
-
-```
-server amorite.invalid.network iburst
-server time.nullroutenetworks.com iburst
-server clock.fmt.he.net iburst
-server clepsydra.kjsl.com iburst
-server ntp1.thelifeofkenneth.com iburst
-```
-
-## OSS Mirror
-
-One of the FCIX members hosts a high performance software mirror, which other members might consider using for their systems: [https://mirror.xtom.com](https://mirror.xtom.com/)

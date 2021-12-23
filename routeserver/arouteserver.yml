@@ -55,7 +55,7 @@ bgpq3_host: "whois.radb.net"
 # How many threads will be used to acquire data from
 # external sources (IRRDB info, PeeringDB for max-prefix
 # limit).
-#threads: 4
+threads: 1
 
 # Cache expiry time, in seconds.
 #

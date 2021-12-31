@@ -1,0 +1,13 @@
+#cloud-config
+users:
+- name: ixpadmin
+  groups: sudo
+  shell: /bin/bash
+  sudo: ['ALL=(ALL) NOPASSWD:ALL']
+  ssh_authorized_keys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDA59zxKl94UKpC3VjRsxf2e2MYUpGEOupDMfTcefVl3i+ZyohKpVvnOAGqWh4/SaKJK6G/6tt6WIL08sovMSFTgwhp+3ccj0hebJoB2pPWl3ckCV0UQ48NJD+tZqFAcCvM9p6N321ZLEvEKqJbLv3BXvncpqcl7qGqDS9ofxLUgtCZRgugAl181vWz69XxHabptDgYgpZBFdugg+QhPO2F+yc6Jua0UCY4BXu0IqvhJmF9Htxc+y2jLpPmAfoA17vm3CDGs/+GAG++o+3ktSp9QPowHNIyZVQmKCFvzWn2CW4td9qrRhnDrbzpIW0/dkd8IRqqVF2x3JIEeKb+B1Jz kenneth@node1
+
+power_state:
+  mode: poweroff
+  condition: True
+

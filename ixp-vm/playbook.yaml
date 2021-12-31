@@ -1,0 +1,57 @@
+---
+
+- hosts: all
+  become: true
+  remote_user: kenneth
+
+  tasks:
+
+    - name: Update all software
+      apt:
+        name: "*"
+        state: latest
+        update_cache: yes
+        cache_valid_time: 3600
+        autoremove: yes
+        autoclean: yes
+
+    - name: Install required daemons and tools
+      apt:
+        pkg:
+          - bird
+          - python3-dev
+          - bgpq4
+          - python3-pip
+          - vim
+          - screen
+          - tcpdump
+          - dstat
+          - git
+
+    - name: Configure network addresses
+      template:
+        src: templates/netconfig
+        dest: /etc/network/interfaces
+      notify:
+        - restart networking
+
+    - name: Create FCIX var directory
+      file:
+        path: /var/ixp
+        state: directory
+
+    - name: Clone FCIX repo
+      git:
+        dest: /var/ixp/fcix
+        repo: 'https://github.com/PhirePhly/fcix.git'
+
+    - name: Install ARouteServer
+      pip:
+        name: arouteserver
+        executable: pip3
+
+  handlers:
+    - name: restart networking
+      service:
+        name: networking
+        state: restarted

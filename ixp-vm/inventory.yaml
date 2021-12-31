@@ -1,0 +1,11 @@
+
+devrs:
+  hosts:
+    test-rs1:
+      ansible_host: 10.44.1.229
+      if_oob_address_v4: 10.44.1.229
+      if_oob_gateway_v4: 10.44.1.1
+      if_ixp_address_v4: 192.0.2.253
+      if_ixp_netmask_v4: 24
+      if_ixp_address_v6: 2001:db8:100::253
+

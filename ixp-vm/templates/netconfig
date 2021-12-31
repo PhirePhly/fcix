@@ -1,0 +1,20 @@
+# Network config managed by Ansible
+# /etc/network/interfaces
+
+auto lo
+iface lo inet loopback
+
+auto ens3
+iface ens3 inet static
+	address {{ if_oob_address_v4 }}/24
+	gateway {{ if_oob_gateway_v4 }}
+	dns-domain ixp.fcix.net
+	dns-nameservers 1.1.1.1 8.8.8.8
+
+auto ens4
+iface ens4 inet static
+	address {{ if_ixp_address_v4 }}/{{ if_ixp_netmask_v4 }}
+
+iface ens4 inet6 static
+	address {{ if_ixp_address_v6 }}/64
+

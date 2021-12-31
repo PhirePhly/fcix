@@ -1,0 +1,19 @@
+---
+
+tenants:
+  FCIX:
+    mac_vrf_vni_base: 10000
+    l2vlans:
+      70:
+        name: FCIX-PRODUCTION
+        tags: [ fcix ]
+      71:
+        name: FCIX-PROVISIONING
+        tags: [ fcix ]
+      72:
+        name: FCIX-OOB
+        tags: [ fcix ]
+      20:
+        name: PPD-KWFWAN1
+        tags: [ phirephlydesign ]
+

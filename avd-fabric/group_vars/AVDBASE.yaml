@@ -1,0 +1,69 @@
+---
+
+output_dir_name: 'build'
+
+load_interval:
+  default: 5
+
+mgmt_gateway: 10.44.1.1
+mgmt_destination_networks:
+  - 0.0.0.0/0
+
+name_servers:
+  source:
+    vrf: MGMT
+  nodes:
+    - 10.44.1.1
+
+ntp:
+  servers:
+  - name: 0.pool.ntp.org
+    vrf: MGMT
+  - name: 1.pool.ntp.org
+    vrf: MGMT
+  - name: 2.pool.ntp.org
+    vrf: MGMT
+  - name: 3.pool.ntp.org
+    vrf: MGMT
+
+internal_vlan_order:
+  allocation: "ascending"
+  range:
+    beginning: 3000
+    ending: 3999
+
+spanning_tree:
+  mode: rapid-pvst
+
+service_unsupported_transceiver:
+  license_name: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          36653437653739636439373237353662343830646139356231653931336464656439646133633039
+          3035616363303165393665356335383162633732626165630a353964393162316334323266363534
+          39366632393034313936323462303764393432333465366264333738623231623030636434653538
+          3438376632326439300a653135366433613266636265616537633130393934613833343736343062
+          62383564316438623934653762653932373162303035316231333963323534653930
+  license_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34386639663062353539353266663665633930363061313465613661333337346664346335626338
+          3565343661666339373031666431623138666135656639350a303430343635346465303236333833
+          35356332303562346632633838623733663235643066353435343739666163303239663863643135
+          3563643238613239640a656234346630323134353632646134393564613330633338396432346361
+          3739
+
+aaa_authorization:
+  exec:
+    default: local
+
+local_users:
+  ixpadmin:
+    privilege: 15
+    role: network-admin
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDA59zxKl94UKpC3VjRsxf2e2MYUpGEOupDMfTcefVl3i+ZyohKpVvnOAGqWh4/SaKJK6G/6tt6WIL08sovMSFTgwhp+3ccj0hebJoB2pPWl3ckCV0UQ48NJD+tZqFAcCvM9p6N321ZLEvEKqJbLv3BXvncpqcl7qGqDS9ofxLUgtCZRgugAl181vWz69XxHabptDgYgpZBFdugg+QhPO2F+yc6Jua0UCY4BXu0IqvhJmF9Htxc+y2jLpPmAfoA17vm3CDGs/+GAG++o+3ktSp9QPowHNIyZVQmKCFvzWn2CW4td9qrRhnDrbzpIW0/dkd8IRqqVF2x3JIEeKb+B1Jz kenneth@node1"
+  kenneth:
+    privilege: 15
+    role: network-admin
+    sha512_password: "$6$UpoqD6gkB.bzm2dh$nIDaxuxmWv1kZR4yWPCH4gA7Ut/WmRTR1pTRnh2xSDSD2mOkYPoMeKS4Sifsg7FVSbQyeAmNU1uLsD4hHSFon1"
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1JBjWb0kj/xfeNX7eZ+DzMECKeOqATPbA5s2KU5kutZNW1Z/buG+/RZNN5U2mQVA27tIuVghfVxTY7lzHlsEout+iu7t16Kt1zzVJjGVCt58VTbFH/rhkRJRVbsh5a2x8NUXZXQqlL59++ezqJvkO1m2UMyPmkryrEX9UMnIaoP10W+/og3KRoNmTZYrZnvYiSyI3d6qjvFnShgwPIu76w1diGd3bMKvXw5ognfVrREubPYSTML2KYzvDG/wscbqP2v4v07o1tkJQMGG9UGsR0TKMPNXrBvj9L/UwWElCe85QhTZ5RD4YrBMTSbJ5RsGgGRGlpL/PAyVw7D05+p11 kenneth@fcix-gw"
+
+

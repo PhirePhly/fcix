@@ -11,3 +11,11 @@ routeserver/RS1.bird.conf
 routeserver/RS1.bird6.conf
 routeserver/RS2.bird.conf
 routeserver/RS2.bird6.conf
+
+# AVD build folders
+avd-fabric/build
+avd-fabric/config_backup
+avd-fabric/documentation
+avd-fabric/reports
+avd-fabric/snapshots
+

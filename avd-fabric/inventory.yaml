@@ -1,0 +1,44 @@
+---
+
+AVDBASE:
+  children:
+    FCIX:
+      children:
+        L2VTEP:
+          hosts:
+            SW3.FMT2.FCIX.NET:
+              ansible_host: sw3.fmt2.fcix.net
+            SW4.FMT2.FCIX.NET:
+              ansible_host: sw4.fmt2.fcix.net
+            SW5.FMT2.FCIX.NET:
+              ansible_host: sw5.fmt2.fcix.net
+            CORE1.FMT2.FCIX.NET:
+              ansible_host: core1.fmt2.fcix.net
+            CORE2.FMT2.FCIX.NET:
+              ansible_host: core2.fmt2.fcix.net
+
+
+      vars:
+        ansible_connection: httpapi
+        ansible_httpapi_use_ssl: true
+        ansible_httpapi_validate_certs: false
+        ansible_user: ixpadmin
+        ansible_password: !vault |
+            $ANSIBLE_VAULT;1.1;AES256
+            64653734333237623131323132653134376531613632316639396164643038613166353763663361
+            3565643438333262666461623939333038383566613333310a306362633336303961343230663938
+            35633532346133623938326266323837633433326534633832386266306165333839393435373335
+            3834626234663165300a623863653366656133626666613864316333363531643839636465356532
+            63623365363263373335363830303336643639653733316231373061623932346130
+        ansible_become: true
+        ansible_become_method: enable
+        ansible_network_os: eos
+        ansible_httpapi_port: 443
+        ansible_python_interpreter: $(which python3)
+
+    IXP_VLANS:
+      children:
+        FCIX:
+    IXP_PEERS:
+      children:
+        FCIX:

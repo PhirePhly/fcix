@@ -1,0 +1,158 @@
+---
+
+fabric_name: FCIX
+
+node_type_keys:
+  l2vtep:
+    type: l2vtep
+    connected_endpoints: true
+    default_evpn_role: client
+    mlag_support: false
+    network_services:
+      l2: true
+      l3: false
+    vtep: true
+    interface_descriptions:
+      connected_endpoints_ethernet_interfaces: templates/ixp_peer_int_desc.j2
+      connected_endpoints_portchannel_interfaces: templates/ixp_peer_int_desc.j2
+
+underlay_p2p_network_summary: 100.65.0.0/16
+overlay_lookback_network_summary: 100.64.0.0/24
+vtep_loopback_network_summary: 100.64.128.0/24
+
+evpn_ebgp_multihop: 5
+
+l2vtep:
+  defaults:
+    mlag: false
+    loopback_ipv4_pool: 100.64.0.0/24
+    vtep_loopback_ipv4_pool: 100.64.128.0/24
+    bgp_defaults:
+      - no bgp default ipv4-unicast
+
+  node_groups:
+    HEFMT2:
+      uplink_ipv4_pool: 100.65.0.0/20
+      nodes:
+        CORE1.FMT2.FCIX.NET:
+          id: 1
+          mgmt_ip: 10.44.24.99/24
+          bgp_as: 4200000001
+          evpn_role: server
+        CORE2.FMT2.FCIX.NET:
+          id: 2
+          mgmt_ip: 10.44.24.98/24
+          bgp_as: 4200000002
+          uplink_interfaces: [ Ethernet2/1 ]
+          uplink_switches: [ CORE1.FMT2.FCIX.NET ]
+          uplink_switch_interfaces: [ Ethernet2/1 ]
+          evpn_role: server
+          evpn_route_servers: [ CORE1.FMT2.FCIX.NET ]
+        SW3.FMT2.FCIX.NET:
+          id: 3
+          mgmt_ip: 10.44.24.15/24
+          bgp_as: 4200000003
+          uplink_interfaces: [ Ethernet49/1, Ethernet51/1 ]
+          uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
+          uplink_switch_interfaces: [ Ethernet32/1, Ethernet32/1 ]
+        SW4.FMT2.FCIX.NET:
+          id: 4
+          mgmt_ip: 10.44.24.97/24
+          bgp_as: 4200000004
+          uplink_interfaces: [ Ethernet49/1, Ethernet51/1 ]
+          uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
+          uplink_switch_interfaces: [ Ethernet30/1, Ethernet30/1 ]
+        SW5.FMT2.FCIX.NET:
+          id: 5
+          mgmt_ip: 10.44.24.96/24
+          bgp_as: 4200000005
+          uplink_interfaces: [ Ethernet49/1, Ethernet51/1 ]
+          uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
+          uplink_switch_interfaces: [ Ethernet28/1, Ethernet28/1 ]
+
+
+access_lists:
+  acl-protect-ixp-v4:
+    sequence_numbers:
+      1000:
+        action: "ip permit any any"
+  acl-qos-tc0-v4: # Scavenger class
+    sequence_numbers:
+      10:
+        action: "permit tcp any any eq rsync"
+      20:
+        action: "permit tcp any eq rsync any"
+      30:
+        action: "permit tcp any any eq ftp-data"
+      40:
+        action: "permit tcp any eq ftp-data any"
+      50:
+        action: "permit tcp any any eq smtp"
+      60:
+        action: "permit tcp any eq smtp any"
+      70: # SNMP
+        action: "permit udp any eq 161 any"
+      80: # CHARGEN
+        action: "permit udp any eq 19 any"
+      90: # memcached
+        action: "permit udp any eq 11211 any"
+      100: # SSDP
+        action: "permit udp any eq 1900 any"
+      110:
+        action: "permit ip any any dscp cs1"
+      120: # Internet Archive S3 load-balancer
+        action: "permit ip any host 207.241.239.10"
+      130: # Internet Archive S3 load-balancer
+        action: "permit ip any host 207.241.239.246"
+  acl-qos-tc5-v4: # Express Forwarding
+    sequence_numbers:
+      10:
+        action: "permit ip any any dscp ef"
+      20:
+        action: "permit ip any any dscp cs5"
+      30:
+        action: "permit udp any any eq domain"
+      40:
+        action: "permit udp any eq domain any"
+      50:
+        action: "permit tcp any any eq domain"
+      60:
+        action: "permit tcp any eq domain any"
+      70:
+        action: "permit udp any any eq ntp"
+      80:
+        action: "permit udp any eq ntp any"
+
+  acl-qos-tc6-v4: # IXP control plane
+    sequence_numbers:
+      10:
+        action: "permit tcp 206.80.238.0/24 eq bgp 206.80.238.0/24"
+      20:
+        action: "permit tcp 206.80.238.0/24 206.80.238.0/24 eq bgp"
+
+ipv6_access_lists:
+  acl-protect-ixp-v6:
+    sequence_numbers:
+      1000:
+        action: "ipv6 permit any any"
+
+mac_access_lists:
+  acl-protect-ixp-mac:
+    sequence_numbers:
+      10:
+        action: "remark CDP"
+      20:
+        action: "deny any 01:00:0c:cc:cc:cc 00:00:00:00:00:00"
+      30:
+        action: "remark Spanning Tree"
+      40:
+        action: "deny any 01:80:c2:00:00:00 00:00:00:00:00:00"
+      50:
+        action: "deny any 01:00:0c:cc:cc:cd 00:00:00:00:00:00"
+      60:
+        action: "remark MOP"
+      70:
+        action: "deny any ab:00:00:02:00:00 00:00:00:00:00:00"
+      1000:
+        action: "permit any any"
+

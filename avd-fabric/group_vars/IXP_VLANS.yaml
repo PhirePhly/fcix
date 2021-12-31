@@ -13,7 +13,38 @@ tenants:
       72:
         name: FCIX-OOB
         tags: [ fcix ]
+
+      10:
+        name: PPD-OOB
+        tags: [ phirephlydesign ]
+      11:
+        name: PPD-SAN
+        tags: [ phirephlydesign ]
       20:
         name: PPD-KWFWAN1
+        tags: [ phirephlydesign ]
+      21:
+        name: PPD-KWFWAN2
+        tags: [ phirephlydesign ]
+      30:
+        name: PPD-SEANWAN
+        tags: [ phirephlydesign ]
+      42:
+        name: PPD-FL2
+        tags: [ phirephlydesign ]
+      43:
+        name: PPD-GUESTWIFI
+        tags: [ phirephlydesign ]
+      60:
+        name: PPD-DHCP
+        tags: [ phirephlydesign ]
+      80:
+        name: PPD-ECHO
+        tags: [ phirephlydesign ]
+      1000:
+        name: PPD-PP-MICE
+        tags: [ phirephlydesign ]
+      1001:
+        name: PPD-PP-WSI
         tags: [ phirephlydesign ]
 

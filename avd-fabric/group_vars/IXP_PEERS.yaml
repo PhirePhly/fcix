@@ -46,3 +46,13 @@ routers:
         switches: [ SW3.FMT2.FCIX.NET ]
         endpoint_ports: [ 'KWF' ]
 
+  AS26073:
+    adapters:
+      - profile: FCIX_PROD
+        switch_ports: [Ethernet2, Ethernet3 ]
+        switches: [ SW3.FMT2.FCIX.NET, SW3.FMT2.FCIX.NET ]
+        endpoint_ports: [ 'Cofractal', 'Cofractal' ]
+        peer_name: 'Cofractal'
+        port_channel:
+          mode: active
+

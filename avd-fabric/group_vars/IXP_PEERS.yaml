@@ -1,9 +1,8 @@
 ---
 
 port_profiles:
-  FCIX_PROD:
+  FCIX_GENERIC:
     mode: access
-    vlans: "70"
     qos_profile: qprof_fcix
     storm_control:
       broadcast:
@@ -14,20 +13,23 @@ port_profiles:
       access_group_in: acl-protect-ixp-v4
       ipv6_access_group_in: acl-protect-ixp-v6
       mac_access_group_in: acl-protect-ixp-mac
+    raw_eos_cli: |
+        switchport port-security
+    port_channel:
+      structured_config:
+        access_group_in: acl-protect-ixp-v4
+        ipv6_access_group_in: acl-protect-ixp-v6
+        mac_access_group_in: acl-protect-ixp-mac
+      raw_eos_cli: |
+          switchport port-security
+
+  FCIX_PROD:
+    parent_profile: FCIX_GENERIC
+    vlans: "70"
 
   FCIX_PROV:
-    mode: access
+    parent_profile: FCIX_GENERIC
     vlans: "71"
-    qos_profile: qprof_fcix
-    storm_control:
-      broadcast:
-        level: 0.01
-      multicast:
-        level: 0.01
-    structured_config:
-      access_group_in: acl-protect-ixp-v4
-      ipv6_access_group_in: acl-protect-ixp-v6
-      mac_access_group_out: acl-protect-ixp-mac
 
 routers:
   AS7247:
@@ -35,7 +37,7 @@ routers:
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet3]
-        switches: [ SW4.FMT2.FCIX.NET ]
+        switches: [ SW3.FMT2.FCIX.NET ]
         endpoint_ports: [ 'Mojo Networks' ]
 
   AS7034:

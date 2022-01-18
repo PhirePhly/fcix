@@ -70,6 +70,13 @@ l2vtep:
           uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
           uplink_switch_interfaces: [ Ethernet28/1, Ethernet28/1 ]
 
+errdisable:
+  recovery:
+    causes:
+      - bpduguard
+      - link-flap
+      - portsec
+    interval: 600
 
 access_lists:
   acl-protect-ixp-v4:
@@ -91,35 +98,60 @@ access_lists:
   acl-qos-tc0-v4: # Scavenger class
     sequence_numbers:
       10:
-        action: "permit tcp any any eq rsync"
-      20:
-        action: "permit tcp any eq rsync any"
-      30:
-        action: "permit tcp any any eq ftp-data"
-      40:
-        action: "permit tcp any eq ftp-data any"
-      50:
-        action: "permit tcp any any eq smtp"
-      60:
-        action: "permit tcp any eq smtp any"
-      70: # SNMP DDoS
-        action: "permit udp any eq 161 any"
-      80: # CHARGEN DDoS
-        action: "permit udp any eq 19 any"
-      90: # memcached DDoS
-        action: "permit udp any eq 11211 any"
-      100: # SSDP DDoS
-        action: "permit udp any eq 1900 any"
-      110:
         action: "permit ip any any dscp cs1"
-      120:
+      20:
         action: "permit ip any any dscp 1"
-      130:
+      30:
         action: "permit ip any any dscp 2"
-      140: # Internet Archive S3 load-balancer
+      40:
+        action: "permit tcp any any eq rsync"
+      50:
+        action: "permit tcp any eq rsync any"
+      60:
+        action: "permit tcp any any eq ftp-data"
+      70:
+        action: "permit tcp any eq ftp-data any"
+      80:
+        action: "permit tcp any any eq smtp"
+      90:
+        action: "permit tcp any eq smtp any"
+      100: # CHARGEN DDoS
+        action: "permit udp any eq 19 any"
+      110: # SUNRPC DDoS
+        action: "permit udp any eq 111 any"
+      120: # SNMP DDoS
+        action: "permit udp any eq 161 any"
+      130: # LDAP DDoS
+        action: "permit udp any eq 389 any"
+      140: # SSDP DDoS
+        action: "permit udp any eq 1900 any"
+      150: # ARMS DDoS
+        action: "permit udp any eq 3283 any"
+      160: # WS-Discovery DDoS
+        action: "permit udp any eq 3702 any"
+      170: # memcached DDoS
+        action: "permit udp any eq 11211 any"
+      180: # DHCPDiscover DVR DDoS
+        action: "permit udp any eq 37810 any"
+      190: # Nonsense UDP destination ports
+        action: "permit udp any any eq 0"
+      200: # Nonsense UDP destination ports
+        action: "permit udp any any eq 22"
+      210: # Nonsense UDP destination ports
+        action: "permit udp any any eq 80"
+      220: # Nonsense UDP destination ports
+        action: "permit udp any any eq 443"
+      230: # Nonsense UDP destination ports
+        action: "permit udp any any eq 8000"
+      240: # Nonsense UDP destination ports
+        action: "permit udp any any eq 65535"
+      250: # UDP Fragment Attacks
+        action: "permit udp any any fragments"
+      260: # Internet Archive S3 load-balancer
         action: "permit ip any host 207.241.239.10"
-      150: # Internet Archive S3 load-balancer
+      270: # Internet Archive S3 load-balancer
         action: "permit ip any host 207.241.239.246"
+
   acl-qos-tc5-v4: # Express Forwarding
     sequence_numbers:
       10:
@@ -170,31 +202,55 @@ ipv6_access_lists:
   acl-qos-tc0-v6: # Scavenger Class
     sequence_numbers:
       10:
-        action: "permit tcp any any eq rsync"
-      20:
-        action: "permit tcp any eq rsync any"
-      30:
-        action: "permit tcp any any eq ftp-data"
-      40:
-        action: "permit tcp any eq ftp-data any"
-      50:
-        action: "permit tcp any any eq smtp"
-      60:
-        action: "permit tcp any eq smtp any"
-      70: # SNMP DDoS
-        action: "permit udp any eq 161 any"
-      80: # CHARGEN DDoS
-        action: "permit udp any eq 19 any"
-      90: # memcached DDoS
-        action: "permit udp any eq 11211 any"
-      100: # SSDP DDoS
-        action: "permit udp any eq 1900 any"
-      110:
         action: "permit ipv6 any any dscp cs1"
-      120:
+      20:
         action: "permit ipv6 any any dscp 1"
-      130:
+      30:
         action: "permit ipv6 any any dscp 2"
+      40:
+        action: "permit tcp any any eq rsync"
+      50:
+        action: "permit tcp any eq rsync any"
+      60:
+        action: "permit tcp any any eq ftp-data"
+      70:
+        action: "permit tcp any eq ftp-data any"
+      80:
+        action: "permit tcp any any eq smtp"
+      90:
+        action: "permit tcp any eq smtp any"
+      100: # CHARGEN DDoS
+        action: "permit udp any eq 19 any"
+      110: # SUNRPC DDoS
+        action: "permit udp any eq 111 any"
+      120: # SNMP DDoS
+        action: "permit udp any eq 161 any"
+      130: # LDAP DDoS
+        action: "permit udp any eq 389 any"
+      140: # SSDP DDoS
+        action: "permit udp any eq 1900 any"
+      150: # ARMS DDoS
+        action: "permit udp any eq 3283 any"
+      160: # WS-Discovery DDoS
+        action: "permit udp any eq 3702 any"
+      170: # memcached DDoS
+        action: "permit udp any eq 11211 any"
+      180: # DHCPDiscover DVR DDoS
+        action: "permit udp any eq 37810 any"
+      190: # Nonsense UDP destination ports
+        action: "permit udp any any eq 0"
+      200: # Nonsense UDP destination ports
+        action: "permit udp any any eq 22"
+      210: # Nonsense UDP destination ports
+        action: "permit udp any any eq 80"
+      220: # Nonsense UDP destination ports
+        action: "permit udp any any eq 443"
+      230: # Nonsense UDP destination ports
+        action: "permit udp any any eq 8000"
+      240: # Nonsense UDP destination ports
+        action: "permit udp any any eq 65535"
+      250: # UDP Fragment Attacks
+        action: "permit 44 any any"
   acl-qos-tc5-v6: # Express Forwarding
     sequence_numbers:
       10:
@@ -225,16 +281,69 @@ ipv6_access_lists:
         action: "permit tcp 2001:504:91::/64 2001:504:91::/64 eq bgp"
 
 mac_access_lists:
-  acl-protect-ixp-mac:
-    sequence_numbers:
-      20: # Cisco Discovery Protocol (CDP)
+  - name: acl-protect-ixp-mac
+    entries:
+      - description: "Cisco Discovery Protocol (CDP)"
         action: "deny any 01:00:0c:cc:cc:cc 00:00:00:00:00:00"
-      40: # Spanning Tree of both flavors
+      - description: "Spanning Tree of both flavors"
         action: "deny any 01:80:c2:00:00:00 00:00:00:00:00:00"
-      50:
-        action: "deny any 01:00:0c:cc:cc:cd 00:00:00:00:00:00"
-      70: # Maintenance Operation Protocol (MOP)
+      - action: "deny any 01:00:0c:cc:cc:cd 00:00:00:00:00:00"
+      - description: "Maintenance Operation Protocol (MOP)"
         action: "deny any ab:00:00:02:00:00 00:00:00:00:00:00"
-      1000:
-        action: "permit any any"
+      - action: "permit any any"
 
+qos_profiles:
+  qprof_fcix:
+    policy_map: pmap_fcix
+    tx_queues:
+      5:
+        priority: no priority
+        bandwidth_percent: 19
+      1:
+        bandwidth_percent: 80
+      0:
+        bandwidth_percent: 1
+
+policy_maps:
+  qos:
+    pmap_fcix:
+      classes:
+        cmap_tc6_v4:
+          set:
+            traffic_class: 6
+        cmap_tc6_v6:
+          set:
+            traffic_class: 6
+        cmap_tc5_v4:
+          set:
+            traffic_class: 5
+        cmap_tc5_v6:
+          set:
+            traffic_class: 5
+        cmap_tc0_v4:
+          set:
+            traffic_class: 0
+        cmap_tc0_v6:
+          set:
+            traffic_class: 0
+
+class_maps:
+  qos:
+    cmap_tc6_v4:
+      ip:
+        access_group: acl_qos_tc6_v4
+    cmap_tc6_v6:
+      ipv6:
+        access_group: acl_qos_tc6_v6
+    cmap_tc5_v4:
+      ip:
+        access_group: acl_qos_tc5_v4
+    cmap_tc5_v6:
+      ipv6:
+        access_group: acl_qos_tc5_v6
+    cmap_tc0_v4:
+      ip:
+        access_group: acl_qos_tc0_v4
+    cmap_tc0_v6:
+      ipv6:
+        access_group: acl_qos_tc0_v6

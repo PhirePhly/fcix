@@ -29,6 +29,7 @@ l2vtep:
     vtep_loopback_ipv4_pool: 100.64.128.0/24
     bgp_defaults:
       - no bgp default ipv4-unicast
+      - command clear all disabled
 
   node_groups:
     HEFMT2:
@@ -36,12 +37,12 @@ l2vtep:
       nodes:
         CORE1.FMT2.FCIX.NET:
           id: 1
-          mgmt_ip: 10.44.24.99/24
+          mgmt_ip: 10.44.24.16/24
           bgp_as: 4200000001
           evpn_role: server
         CORE2.FMT2.FCIX.NET:
           id: 2
-          mgmt_ip: 10.44.24.98/24
+          mgmt_ip: 10.44.24.17/24
           bgp_as: 4200000002
           uplink_interfaces: [ Ethernet2/1 ]
           uplink_switches: [ CORE1.FMT2.FCIX.NET ]
@@ -57,14 +58,14 @@ l2vtep:
           uplink_switch_interfaces: [ Ethernet32/1, Ethernet32/1 ]
         SW4.FMT2.FCIX.NET:
           id: 4
-          mgmt_ip: 10.44.24.97/24
+          mgmt_ip: 10.44.24.18/24
           bgp_as: 4200000004
           uplink_interfaces: [ Ethernet49/1, Ethernet51/1 ]
           uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
           uplink_switch_interfaces: [ Ethernet30/1, Ethernet30/1 ]
         SW5.FMT2.FCIX.NET:
           id: 5
-          mgmt_ip: 10.44.24.96/24
+          mgmt_ip: 10.44.24.19/24
           bgp_as: 4200000005
           uplink_interfaces: [ Ethernet49/1, Ethernet51/1 ]
           uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
@@ -89,7 +90,7 @@ access_lists:
     sequence_numbers:
       10: # Mikrotik Discovery Protocol
         action: "deny udp any eq 5678 host 255.255.255.255 eq 5678"
-      500:
+      500: # Tear down link local BGP
         action: "deny tcp 206.80.238.0/24 eq bgp 206.80.238.0/24"
       510:
         action: "deny tcp 206.80.238.0/24 206.80.238.0/24 eq bgp"
@@ -104,52 +105,46 @@ access_lists:
       30:
         action: "permit ip any any dscp 2"
       40:
-        action: "permit tcp any any eq rsync"
+        action: "permit ip any any dscp af11"
       50:
-        action: "permit tcp any eq rsync any"
+        action: "permit ip any any dscp af12"
       60:
-        action: "permit tcp any any eq ftp-data"
+        action: "permit ip any any dscp af13"
       70:
-        action: "permit tcp any eq ftp-data any"
+        action: "permit tcp any any eq rsync"
       80:
-        action: "permit tcp any any eq smtp"
+        action: "permit tcp any eq rsync any"
       90:
+        action: "permit tcp any any eq ftp-data"
+      100:
+        action: "permit tcp any eq ftp-data any"
+      110:
+        action: "permit tcp any any eq smtp"
+      120:
         action: "permit tcp any eq smtp any"
-      100: # CHARGEN DDoS
+      130: # CHARGEN DDoS
         action: "permit udp any eq 19 any"
-      110: # SUNRPC DDoS
+      140: # SUNRPC DDoS
         action: "permit udp any eq 111 any"
-      120: # SNMP DDoS
+      150: # SNMP DDoS
         action: "permit udp any eq 161 any"
-      130: # LDAP DDoS
+      160: # LDAP DDoS
         action: "permit udp any eq 389 any"
-      140: # SSDP DDoS
+      170: # SSDP DDoS
         action: "permit udp any eq 1900 any"
-      150: # ARMS DDoS
+      180: # ARMS DDoS
         action: "permit udp any eq 3283 any"
-      160: # WS-Discovery DDoS
+      190: # WS-Discovery DDoS
         action: "permit udp any eq 3702 any"
-      170: # memcached DDoS
+      200: # memcached DDoS
         action: "permit udp any eq 11211 any"
-      180: # DHCPDiscover DVR DDoS
+      210: # DHCPDiscover DVR DDoS
         action: "permit udp any eq 37810 any"
-      190: # Nonsense UDP destination ports
-        action: "permit udp any any eq 0"
-      200: # Nonsense UDP destination ports
-        action: "permit udp any any eq 22"
-      210: # Nonsense UDP destination ports
-        action: "permit udp any any eq 80"
-      220: # Nonsense UDP destination ports
-        action: "permit udp any any eq 443"
-      230: # Nonsense UDP destination ports
-        action: "permit udp any any eq 8000"
-      240: # Nonsense UDP destination ports
-        action: "permit udp any any eq 65535"
-      250: # UDP Fragment Attacks
+      220: # UDP Fragment Attacks
         action: "permit udp any any fragments"
-      260: # Internet Archive S3 load-balancer
+      230: # Internet Archive S3 load-balancer
         action: "permit ip any host 207.241.239.10"
-      270: # Internet Archive S3 load-balancer
+      240: # Internet Archive S3 load-balancer
         action: "permit ip any host 207.241.239.246"
 
   acl-qos-tc5-v4: # Express Forwarding
@@ -187,7 +182,7 @@ ipv6_access_lists:
         action: "deny icmpv6 any any 134"
       1000:
         action: "ipv6 permit any any"
-  acl-bcp214-v4:
+  acl-bcp214-v6:
     sequence_numbers:
       10: # Router Solicitation
         action: "deny icmpv6 any any 133"
@@ -207,6 +202,12 @@ ipv6_access_lists:
         action: "permit ipv6 any any dscp 1"
       30:
         action: "permit ipv6 any any dscp 2"
+      31:
+        action: "permit ipv6 any any dscp af11"
+      32:
+        action: "permit ipv6 any any dscp af12"
+      33:
+        action: "permit ipv6 any any dscp af13"
       40:
         action: "permit tcp any any eq rsync"
       50:
@@ -237,19 +238,7 @@ ipv6_access_lists:
         action: "permit udp any eq 11211 any"
       180: # DHCPDiscover DVR DDoS
         action: "permit udp any eq 37810 any"
-      190: # Nonsense UDP destination ports
-        action: "permit udp any any eq 0"
-      200: # Nonsense UDP destination ports
-        action: "permit udp any any eq 22"
-      210: # Nonsense UDP destination ports
-        action: "permit udp any any eq 80"
-      220: # Nonsense UDP destination ports
-        action: "permit udp any any eq 443"
-      230: # Nonsense UDP destination ports
-        action: "permit udp any any eq 8000"
-      240: # Nonsense UDP destination ports
-        action: "permit udp any any eq 65535"
-      250: # UDP Fragment Attacks
+      190: # UDP Fragment Attacks
         action: "permit 44 any any"
   acl-qos-tc5-v6: # Express Forwarding
     sequence_numbers:

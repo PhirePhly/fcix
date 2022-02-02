@@ -46,7 +46,6 @@ routers:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet1 ]
         switches: [ SW3.FMT2.FCIX.NET ]
-        endpoint_ports: [ 'KWF' ]
 
   AS26073:
     adapters:

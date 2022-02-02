@@ -272,6 +272,12 @@ ipv6_access_lists:
 mac_access_lists:
   - name: acl-protect-ixp-mac
     entries:
+      - description: "Allow arp"
+        action: "permit any ffff.ffff.ffff 0000.0000.0000 arp"
+      - description: "Allow IPv6 NS"
+        action: "permit any 3333.0000.0000 0000.ffff.ffff"
+      - description: "Block all other broad/multicast"
+        action: "deny any 0001.0000.0000 fffe.ffff.ffff"
       - description: "Cisco Discovery Protocol (CDP)"
         action: "deny any 01:00:0c:cc:cc:cc 00:00:00:00:00:00"
       - description: "Spanning Tree of both flavors"

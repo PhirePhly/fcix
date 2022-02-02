@@ -10,10 +10,8 @@ mgmt_destination_networks:
   - 0.0.0.0/0
 
 name_servers:
-  source:
+  10.44.1.1:
     vrf: MGMT
-  nodes:
-    - 10.44.1.1
 
 ntp:
   servers:
@@ -66,4 +64,10 @@ local_users:
     sha512_password: "$6$UpoqD6gkB.bzm2dh$nIDaxuxmWv1kZR4yWPCH4gA7Ut/WmRTR1pTRnh2xSDSD2mOkYPoMeKS4Sifsg7FVSbQyeAmNU1uLsD4hHSFon1"
     ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1JBjWb0kj/xfeNX7eZ+DzMECKeOqATPbA5s2KU5kutZNW1Z/buG+/RZNN5U2mQVA27tIuVghfVxTY7lzHlsEout+iu7t16Kt1zzVJjGVCt58VTbFH/rhkRJRVbsh5a2x8NUXZXQqlL59++ezqJvkO1m2UMyPmkryrEX9UMnIaoP10W+/og3KRoNmTZYrZnvYiSyI3d6qjvFnShgwPIu76w1diGd3bMKvXw5ognfVrREubPYSTML2KYzvDG/wscbqP2v4v07o1tkJQMGG9UGsR0TKMPNXrBvj9L/UwWElCe85QhTZ5RD4YrBMTSbJ5RsGgGRGlpL/PAyVw7D05+p11 kenneth@fcix-gw"
 
+snmp_server:
+  contact: noc@fcix.net
+  location: FCIX Fabric
+  communities:
+    wildsecurepassword:
+      access: ro
 

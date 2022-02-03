@@ -10,9 +10,18 @@ mgmt_destination_networks:
   - 0.0.0.0/0
 
 name_servers:
-  10.44.1.1:
+  10.44.24.1:
     vrf: MGMT
 
+logging:
+  console: "disabled"
+  format:
+    timestamp: high-resolution
+  vrfs:
+    MGMT:
+      source_interface: Management1
+      hosts:
+        10.44.24.1:
 ntp:
   servers:
   - name: 0.pool.ntp.org

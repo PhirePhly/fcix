@@ -20,6 +20,8 @@ underlay_p2p_network_summary: 100.65.0.0/16
 overlay_lookback_network_summary: 100.64.0.0/24
 vtep_loopback_network_summary: 100.64.128.0/24
 
+p2p_uplinks_qos_profile: qprof_fcix_uplink
+
 evpn_ebgp_multihop: 5
 
 l2vtep:
@@ -56,6 +58,7 @@ l2vtep:
           uplink_interfaces: [ Ethernet49/1, Ethernet51/1 ]
           uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
           uplink_switch_interfaces: [ Ethernet32/1, Ethernet32/1 ]
+          uplink_interface_speed: forced 40g
         SW4.FMT2.FCIX.NET:
           id: 4
           mgmt_ip: 10.44.24.18/24
@@ -63,6 +66,7 @@ l2vtep:
           uplink_interfaces: [ Ethernet49/1, Ethernet51/1 ]
           uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
           uplink_switch_interfaces: [ Ethernet30/1, Ethernet30/1 ]
+          uplink_interface_speed: forced 40g
         SW5.FMT2.FCIX.NET:
           id: 5
           mgmt_ip: 10.44.24.19/24
@@ -70,6 +74,7 @@ l2vtep:
           uplink_interfaces: [ Ethernet49/1, Ethernet51/1 ]
           uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
           uplink_switch_interfaces: [ Ethernet28/1, Ethernet28/1 ]
+          uplink_interface_speed: forced 40g
 
 errdisable:
   recovery:
@@ -275,7 +280,7 @@ mac_access_lists:
       - description: "Allow arp"
         action: "permit any ffff.ffff.ffff 0000.0000.0000 arp"
       - description: "Allow IPv6 NS"
-        action: "permit any 3333.0000.0000 0000.ffff.ffff"
+        action: "permit any 3333.ff00.0000 0000.00ff.ffff"
       - description: "Block all other broad/multicast"
         action: "deny any 0001.0000.0000 fffe.ffff.ffff"
       - description: "Cisco Discovery Protocol (CDP)"
@@ -290,6 +295,15 @@ mac_access_lists:
 qos_profiles:
   qprof_fcix:
     policy_map: pmap_fcix
+    tx_queues:
+      5:
+        priority: no priority
+        bandwidth_percent: 19
+      1:
+        bandwidth_percent: 80
+      0:
+        bandwidth_percent: 1
+  qprof_fcix_uplink:
     tx_queues:
       5:
         priority: no priority

@@ -22,6 +22,10 @@ vtep_loopback_network_summary: 100.64.128.0/24
 
 p2p_uplinks_qos_profile: qprof_fcix_uplink
 
+interface_defaults:
+  ethernet:
+    shutdown: true
+
 evpn_ebgp_multihop: 5
 
 l2vtep:
@@ -293,7 +297,7 @@ mac_access_lists:
       - action: "permit any any"
 
 qos_profiles:
-  qprof_fcix:
+  qprof_fcix_peer:
     policy_map: pmap_fcix
     tx_queues:
       5:

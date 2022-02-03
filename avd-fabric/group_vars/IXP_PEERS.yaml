@@ -3,7 +3,7 @@
 port_profiles:
   FCIX_GENERIC:
     mode: access
-    qos_profile: qprof_fcix
+    qos_profile: qprof_fcix_peer
     storm_control:
       broadcast:
         level: 0.01
@@ -32,29 +32,101 @@ port_profiles:
     vlans: "71"
 
 routers:
-  AS7247:
-    rack: HEFMT2_1400.06.50
-    adapters:
-      - profile: FCIX_PROV
-        switch_ports: [ Ethernet3]
-        switches: [ SW3.FMT2.FCIX.NET ]
-        endpoint_ports: [ 'Mojo Networks' ]
-
-  AS7034:
-    rack: HEFMT2_1400.08.43
+  AS53988:
     adapters:
       - profile: FCIX_PROD
-        switch_ports: [ Ethernet1 ]
+        switch_ports: [ Ethernet1]
         switches: [ SW3.FMT2.FCIX.NET ]
-        endpoint_ports: [ 'KWF' ]
+        endpoint_ports: [ 'Digital Desert' ]
+
+  AS58057:
+    adapters:
+      - profile: FCIX_PROD
+        switch_ports: [ Ethernet2 ]
+        switches: [ SW3.FMT2.FCIX.NET ]
+        endpoint_ports: [ 'Securebit AG' ]
+
+  AS25948:
+    adapters:
+      - profile: FCIX_PROD
+        switch_ports: [ Ethernet3 ]
+        switches: [ SW3.FMT2.FCIX.NET ]
+        endpoint_ports: [ 'Datablocks' ]
+
+  AS395502:
+    adapters:
+      - profile: FCIX_PROD
+        switch_ports: [ Ethernet4 ]
+        switches: [ SW3.FMT2.FCIX.NET ]
+        endpoint_ports: [ 'JeffColo' ]
+
+  AS62000:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet5 ]
+        switches: [ SW3.FMT2.FCIX.NET ]
+        endpoint_ports: [ 'Netrix SAS' ]
+
+  AS6556:
+    adapters:
+      - profile: FCIX_PROD
+        switch_ports: [ Ethernet6 ]
+        switches: [ SW3.FMT2.FCIX.NET ]
+        endpoint_ports: [ 'Airgapped' ]
+
+  AS397460:
+    adapters:
+      - profile: FCIX_PROD
+        switch_ports: [ Ethernet7 ]
+        switches: [ SW3.FMT2.FCIX.NET ]
+        endpoint_ports: [ 'BayNIC' ]
+
+
+
+
+
 
   AS26073:
     adapters:
       - profile: FCIX_PROD
-        switch_ports: [Ethernet2, Ethernet3 ]
-        switches: [ SW3.FMT2.FCIX.NET, SW3.FMT2.FCIX.NET ]
+        switch_ports: [Ethernet1, Ethernet2 ]
+        switches: [ SW4.FMT2.FCIX.NET, SW4.FMT2.FCIX.NET ]
         endpoint_ports: [ 'Cofractal', 'Cofractal' ]
         peer_name: 'Cofractal'
         port_channel:
           mode: active
 
+  AS32097:
+    adapters:
+      - switch_ports: [ Ethernet46 ]
+        switches: [ SW4.FMT2.FCIX.NET ]
+        endpoint_ports: [ 'N/A' ]
+        peer_name: 'MN VoIP'
+        mode: trunk
+        vlans: "70-72,1000"
+        qos_profile: qprof_fcix_peer
+
+  AS32097:
+    adapters:
+      - switch_ports: [ Ethernet47 ]
+        switches: [ SW4.FMT2.FCIX.NET ]
+        endpoint_ports: [ 'N/A' ]
+        peer_name: 'Wholesale Internet'
+        mode: trunk
+        vlans: "70,1001"
+        qos_profile: qprof_fcix_peer
+        structured_config:
+          access_group_in: acl-protect-ixp-v4
+          ipv6_access_group_in: acl-protect-ixp-v6
+          mac_access_group_in: acl-protect-ixp-mac
+
+  SW1.FMT1.FCIX.NET:
+    rack: HEFMT2_1400.06.50
+    adapters:
+      - switch_ports: [ Ethernet48 ]
+        switches: [ SW4.FMT2.FCIX.NET ]
+        endpoint_ports: [ 'Trunk to FMT1' ]
+        peer_name: 'FMT1 Dark Fiber'
+        mode: trunk
+        vlans: "10,11,20,21,30,42,43,60,70,71,72,80"
+        qos_profile: qprof_fcix_peer

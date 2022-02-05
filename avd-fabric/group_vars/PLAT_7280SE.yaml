@@ -1,0 +1,8 @@
+---
+
+tcam_profile:
+  system: qos
+
+eos_cli: |
+  hardware storm-control unknown-unicast rate 100 kbps burst-size 10 kbytes
+

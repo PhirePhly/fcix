@@ -42,3 +42,8 @@ AVDBASE:
     IXP_PEERS:
       children:
         FCIX:
+    PLAT_7280SE:
+      hosts:
+        SW3.FMT2.FCIX.NET:
+        SW4.FMT2.FCIX.NET:
+        SW5.FMT2.FCIX.NET:

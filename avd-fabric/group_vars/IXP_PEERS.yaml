@@ -22,6 +22,7 @@ port_profiles:
         mac_access_group_in: acl-protect-ixp-mac
       raw_eos_cli: |
           switchport port-security
+    endpoint_ports: [ 'N/A', 'N/A' ]
 
   FCIX_PROD:
     parent_profile: FCIX_GENERIC
@@ -35,7 +36,7 @@ routers:
   AS53988:
     adapters:
       - profile: FCIX_PROD
-        switch_ports: [ Ethernet1]
+        switch_ports: [ Ethernet1 ]
         switches: [ SW3.FMT2.FCIX.NET ]
         endpoint_ports: [ 'Digital Desert' ]
 
@@ -79,7 +80,7 @@ routers:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet7 ]
         switches: [ SW3.FMT2.FCIX.NET ]
-        endpoint_ports: [ 'BayNIC' ]
+        peer_name: 'BayNIC'
 
 
 
@@ -96,7 +97,7 @@ routers:
         port_channel:
           mode: active
 
-  AS32097:
+  AS32098:
     adapters:
       - switch_ports: [ Ethernet46 ]
         switches: [ SW4.FMT2.FCIX.NET ]

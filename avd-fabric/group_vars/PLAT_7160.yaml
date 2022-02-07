@@ -1,0 +1,5 @@
+---
+
+eos_cli: |
+  platform xp profile tcam-acl
+

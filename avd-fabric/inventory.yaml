@@ -47,3 +47,7 @@ AVDBASE:
         SW3.FMT2.FCIX.NET:
         SW4.FMT2.FCIX.NET:
         SW5.FMT2.FCIX.NET:
+    PLAT_7160:
+      hosts:
+        CORE1.FMT2.FCIX.NET:
+        CORE2.FMT2.FCIX.NET:

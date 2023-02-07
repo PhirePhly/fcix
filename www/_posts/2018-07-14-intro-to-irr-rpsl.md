@@ -93,10 +93,9 @@ For example, the Point of Contact (POC) record set up by ARIN and found on your 
 `mnt-nfy:    noc@example.com` - This is an email address which gets notified for every successful attempt to update an object maintained by this `mntner`
 
 `auth:       MAIL-FROM janedoe@example.com` - This is a definition for how users should be authenticated as this maintainer to be allowed to update objects.
-MAIL-FROM is the most basic authentication model, and really isn't very good since it's relatively easy to spoof source addresses in email.
-More secure auth models like MD5-PW and PGPKEY are more secure, but PGP is relatively complicated to get working, and AltDB doesn't support MD5-PW yet, so we're covering the easiest method.
-All that the MAIL-FROM auth method requires is that objects are send to the auto-dbm email address from the email address listed.
-If you'd like to allow multiple accounts to manage this `mntner` object, simply create multiple `auth: MAIL-FROM` lines.
+MAIL-FROM is the most basic authentication model, all that this method requires is that objects are send to the auto-dbm email address from the email address listed. If you'd like to allow multiple accounts to manage this `mntner` object, simply create multiple `auth: MAIL-FROM` lines. It really isn't very good since it's relatively easy to spoof source addresses in email. As a result, AltDB is deprecating this method and no new maintainer objects using it will be created. Instead, please use CRYPT-PW.
+
+CRYPT-PW is more secure: you use a clear-text password (which you keep secure and should never share) to generate an encrypted password. For example, the string HelloAltDB might generate the encrypted password Y24XnZoZgBYzE, and in your obect you would include `CRYPT-PW: Y24XnZoZgBYzE` as the authentication model. You can use [this tool] (https://www.radb.net/crypt_calculator) to generate the encrypted password.
 
 `mnt-by:     MAINT-AS64496` - All objects must be tagged with a `mntner`. Since this `mntner` is managed by itself, once created, updates to the maintainer object can be handled automatically.
 

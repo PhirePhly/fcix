@@ -16,6 +16,7 @@ node_type_keys:
       connected_endpoints_ethernet_interfaces: templates/ixp_peer_eth_desc.j2
       connected_endpoints_port_channel_interfaces: templates/ixp_peer_po_desc.j2
 
+underlay_routing_protocol: OSPF
 underlay_p2p_network_summary: 100.65.0.0/16
 overlay_lookback_network_summary: 100.64.0.0/24
 vtep_loopback_network_summary: 100.64.128.0/24
@@ -55,30 +56,20 @@ l2vtep:
           uplink_switch_interfaces: [ Ethernet2/1 ]
           evpn_role: server
           evpn_route_servers: [ CORE1.FMT2.FCIX.NET ]
-        SW3.FMT2.FCIX.NET:
-          id: 3
-          mgmt_ip: 10.44.24.15/24
-          bgp_as: 4200000003
-          uplink_interfaces: [ Ethernet49/1, Ethernet51/1 ]
-          uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
-          uplink_switch_interfaces: [ Ethernet32/1, Ethernet32/1 ]
-          uplink_interface_speed: forced 40g
         SW4.FMT2.FCIX.NET:
           id: 4
           mgmt_ip: 10.44.24.18/24
           bgp_as: 4200000004
-          uplink_interfaces: [ Ethernet49/1, Ethernet51/1 ]
+          uplink_interfaces: [ Ethernet49/1, Ethernet50/1 ]
           uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
           uplink_switch_interfaces: [ Ethernet30/1, Ethernet30/1 ]
-          uplink_interface_speed: forced 40g
         SW5.FMT2.FCIX.NET:
           id: 5
           mgmt_ip: 10.44.24.19/24
           bgp_as: 4200000005
-          uplink_interfaces: [ Ethernet49/1, Ethernet51/1 ]
+          uplink_interfaces: [ Ethernet49/1, Ethernet50/1 ]
           uplink_switches: [ CORE1.FMT2.FCIX.NET, CORE2.FMT2.FCIX.NET ]
           uplink_switch_interfaces: [ Ethernet28/1, Ethernet28/1 ]
-          uplink_interface_speed: forced 40g
 
 errdisable:
   recovery:
@@ -94,7 +85,7 @@ access_lists:
       10: # Mikrotik Discovery Protocol
         action: "deny udp any eq 5678 host 255.255.255.255 eq 5678"
       1000:
-        action: "ip permit any any"
+        action: "permit ip any any"
   acl-bcp214-v4:
     sequence_numbers:
       10: # Mikrotik Discovery Protocol
@@ -104,7 +95,7 @@ access_lists:
       510:
         action: "deny tcp 206.80.238.0/24 206.80.238.0/24 eq bgp"
       1000:
-        action: "ip permit any any"
+        action: "permit ip any any"
   acl-qos-tc0-v4: # Scavenger class
     sequence_numbers:
       10:
@@ -190,7 +181,7 @@ ipv6_access_lists:
       20: # Router Advertisement
         action: "deny icmpv6 any any 134"
       1000:
-        action: "ipv6 permit any any"
+        action: "permit ipv6 any any"
   acl-bcp214-v6:
     sequence_numbers:
       10: # Router Solicitation
@@ -202,7 +193,7 @@ ipv6_access_lists:
       510:
         action: "deny tcp 2001:504:91::/64 2001:504:91::/64 eq bgp"
       1000:
-        action: "ip permit any any"
+        action: "permit ipv6 any any"
   acl-qos-tc0-v6: # Scavenger Class
     sequence_numbers:
       10:
@@ -286,7 +277,7 @@ mac_access_lists:
       - description: "Allow IPv6 NS"
         action: "permit any 3333.ff00.0000 0000.00ff.ffff"
       - description: "Block all other broad/multicast"
-        action: "deny any 0001.0000.0000 fffe.ffff.ffff"
+        action: "deny any 0100.0000.0000 feff.ffff.ffff"
       - description: "Cisco Discovery Protocol (CDP)"
         action: "deny any 01:00:0c:cc:cc:cc 00:00:00:00:00:00"
       - description: "Spanning Tree of both flavors"
@@ -298,7 +289,9 @@ mac_access_lists:
 
 qos_profiles:
   qprof_fcix_peer:
-    policy_map: pmap_fcix
+    service_policy:
+      type:
+        qos_input: pmap_fcix
     tx_queues:
       5:
         priority: no priority

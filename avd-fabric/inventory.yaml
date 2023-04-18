@@ -6,8 +6,6 @@ AVDBASE:
       children:
         L2VTEP:
           hosts:
-            SW3.FMT2.FCIX.NET:
-              ansible_host: sw3.fmt2.fcix.net
             SW4.FMT2.FCIX.NET:
               ansible_host: sw4.fmt2.fcix.net
             SW5.FMT2.FCIX.NET:
@@ -44,7 +42,6 @@ AVDBASE:
         FCIX:
     PLAT_7280SE:
       hosts:
-        SW3.FMT2.FCIX.NET:
         SW4.FMT2.FCIX.NET:
         SW5.FMT2.FCIX.NET:
     PLAT_7160:

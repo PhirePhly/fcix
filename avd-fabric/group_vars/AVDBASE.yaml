@@ -66,6 +66,7 @@ local_users:
   ixpadmin:
     privilege: 15
     role: network-admin
+    sha512_password: "$6$UpoqD6gkB.bzm2dh$nIDaxuxmWv1kZR4yWPCH4gA7Ut/WmRTR1pTRnh2xSDSD2mOkYPoMeKS4Sifsg7FVSbQyeAmNU1uLsD4hHSFon1"
     ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDA59zxKl94UKpC3VjRsxf2e2MYUpGEOupDMfTcefVl3i+ZyohKpVvnOAGqWh4/SaKJK6G/6tt6WIL08sovMSFTgwhp+3ccj0hebJoB2pPWl3ckCV0UQ48NJD+tZqFAcCvM9p6N321ZLEvEKqJbLv3BXvncpqcl7qGqDS9ofxLUgtCZRgugAl181vWz69XxHabptDgYgpZBFdugg+QhPO2F+yc6Jua0UCY4BXu0IqvhJmF9Htxc+y2jLpPmAfoA17vm3CDGs/+GAG++o+3ktSp9QPowHNIyZVQmKCFvzWn2CW4td9qrRhnDrbzpIW0/dkd8IRqqVF2x3JIEeKb+B1Jz kenneth@node1"
   kenneth:
     privilege: 15

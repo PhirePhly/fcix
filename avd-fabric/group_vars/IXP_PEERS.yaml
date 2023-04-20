@@ -46,6 +46,8 @@ routers:
         switch_ports: [ Ethernet9/1 ]
         switches: [ CORE1.FMT2.FCIX.NET ]
         peer_name: 'Hurricane Electric'
+        port_channel:
+          mode: active
   AS7247:
     adapters:
       - profile: FCIX_PROD
@@ -101,4 +103,5 @@ routers:
         qos_profile: qprof_fcix_peer
         structured_config:
           speed: forced 40g
+          spanning_tree_bpdufilter: enabled
 

@@ -13,6 +13,7 @@ port_profiles:
       access_group_in: acl-protect-ixp-v4
       ipv6_access_group_in: acl-protect-ixp-v6
       mac_access_group_in: acl-protect-ixp-mac
+      spanning_tree_bpdufilter: enabled
     raw_eos_cli: |
         switchport port-security
     port_channel:
@@ -20,6 +21,7 @@ port_profiles:
         access_group_in: acl-protect-ixp-v4
         ipv6_access_group_in: acl-protect-ixp-v6
         mac_access_group_in: acl-protect-ixp-mac
+        spanning_tree_bpdufilter: enabled
       raw_eos_cli: |
           switchport port-security
     endpoint_ports: [ 'N/A', 'N/A' ]
@@ -46,6 +48,22 @@ routers:
         switch_ports: [ Ethernet9/1 ]
         switches: [ CORE1.FMT2.FCIX.NET ]
         peer_name: 'Hurricane Electric'
+        port_channel:
+          mode: active
+  AS26073:
+    adapters:
+      - profile: FCIX_PROD
+        switch_ports: [ Ethernet11/1 ]
+        switches: [ CORE1.FMT2.FCIX.NET ]
+        peer_name: 'Cofractal'
+        port_channel:
+          mode: active
+  AS26073B:
+    adapters:
+      - profile: FCIX_PROD
+        switch_ports: [ Ethernet11/1 ]
+        switches: [ CORE2.FMT2.FCIX.NET ]
+        peer_name: 'Cofractal'
         port_channel:
           mode: active
   AS7247:

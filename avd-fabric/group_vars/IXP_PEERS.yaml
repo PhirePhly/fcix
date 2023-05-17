@@ -66,12 +66,6 @@ routers:
         peer_name: 'Cofractal'
         port_channel:
           mode: active
-  AS7247:
-    adapters:
-      - profile: FCIX_PROD
-        switch_ports: [ Ethernet3 ]
-        switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Mojo'
 
 
 
@@ -84,6 +78,30 @@ routers:
         peer_name: 'DBolical'
         port_channel:
           mode: active
+  AS7247:
+    adapters:
+      - profile: FCIX_PROD
+        switch_ports: [ Ethernet3 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Mojo'
+  AS397715:
+    adapters:
+      - profile: FCIX_PROD
+        switch_ports: [ Ethernet4 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'KPFA'
+  AS199518:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet5 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Gregory Shapiro'
+  AS138398:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet6 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Prodigi'
 
   AS32621:
     adapters:

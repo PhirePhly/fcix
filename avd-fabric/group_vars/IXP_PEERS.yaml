@@ -92,7 +92,7 @@ routers:
         peer_name: 'KPFA'
   AS199518:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet5 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Gregory Shapiro'

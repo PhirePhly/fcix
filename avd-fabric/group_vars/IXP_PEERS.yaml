@@ -98,7 +98,7 @@ routers:
         peer_name: 'Gregory Shapiro'
   AS138398:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet6 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Prodigi'

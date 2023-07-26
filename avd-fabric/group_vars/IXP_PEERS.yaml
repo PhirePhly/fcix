@@ -102,6 +102,12 @@ routers:
         switch_ports: [ Ethernet6 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Prodigi'
+  AS53616:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet7 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Asymptote Networks'
 
   AS32621:
     adapters:

@@ -2,8 +2,6 @@
 
 www:
 	bin/gen_www_participants.sh
-	bin/gen_routeserver_clients.sh
-	bin/gen_routeserver_policypage.sh
 	cd www; jekyll build
 
 www-dev: www

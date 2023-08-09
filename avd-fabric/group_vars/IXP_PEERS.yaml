@@ -108,6 +108,18 @@ routers:
         switch_ports: [ Ethernet7 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Asymptote Networks'
+  AS1734:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet8 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'DeLong Consulting'
+  AS34615:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet9 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Universal Exports'
 
   AS32621:
     adapters:

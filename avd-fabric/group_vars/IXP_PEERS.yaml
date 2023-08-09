@@ -120,6 +120,12 @@ routers:
         switch_ports: [ Ethernet9 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Universal Exports'
+  AS32872:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet10 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Difficult Computing'
 
   AS32621:
     adapters:

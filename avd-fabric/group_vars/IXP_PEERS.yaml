@@ -104,7 +104,7 @@ routers:
         peer_name: 'Prodigi'
   AS53616:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet7 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Asymptote Networks'
@@ -122,7 +122,7 @@ routers:
         peer_name: 'Universal Exports'
   AS32872:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet10 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Difficult Computing'

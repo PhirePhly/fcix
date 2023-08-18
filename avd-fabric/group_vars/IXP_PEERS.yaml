@@ -110,7 +110,7 @@ routers:
         peer_name: 'Asymptote Networks'
   AS1734:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet8 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'DeLong Consulting'

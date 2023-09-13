@@ -126,6 +126,18 @@ routers:
         switch_ports: [ Ethernet10 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Difficult Computing'
+  AS54746:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet11 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Klazo'
+  AS63801:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet12 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'DODO KK'
 
   AS32621:
     adapters:

@@ -138,6 +138,20 @@ routers:
         switch_ports: [ Ethernet12 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'DODO KK'
+  AS22296:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet13 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Vorsk'
+  AS15353:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet14 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Xentain Solutions'
+
+
 
   AS32621:
     adapters:

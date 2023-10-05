@@ -3,7 +3,6 @@ www/participants.md
 www/_site
 www/.sass-cache
 www/.jekyll-metadata
-www/rs-policy.html
 
 # Ephemeral config files
 routeserver/clients.yml

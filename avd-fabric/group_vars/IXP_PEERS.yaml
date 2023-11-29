@@ -140,7 +140,7 @@ routers:
         peer_name: 'DODO KK'
   AS22296:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet13 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Vorsk'
@@ -150,6 +150,12 @@ routers:
         switch_ports: [ Ethernet14 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Xentain Solutions'
+  AS53283:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet15 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Litware LLC'
 
 
 

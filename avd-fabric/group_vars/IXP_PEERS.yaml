@@ -128,7 +128,7 @@ routers:
         peer_name: 'Difficult Computing'
   AS54746:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet11 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Klazo'
@@ -146,7 +146,7 @@ routers:
         peer_name: 'Vorsk'
   AS15353:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet14 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Xentain Solutions'
@@ -156,6 +156,24 @@ routers:
         switch_ports: [ Ethernet15 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Litware LLC'
+  AS202365:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet16 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Chronos Teknoloji'
+  AS21805:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet17 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Mr. Hamel'
+  AS57870:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet18 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'UNLIMITED IS LIMITED'
 
 
 

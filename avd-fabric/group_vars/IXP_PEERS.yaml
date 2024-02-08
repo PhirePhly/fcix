@@ -182,10 +182,28 @@ routers:
         peer_name: 'Everythink Innovations'
   AS40217:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet20 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'The St. Paul Group'
+  AS32681:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet21 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Bay Area Mesh'
+  AS17008:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet22 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Trnasit Yard'
+  AS400919:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet23 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Akradam Networks'
 
 
 

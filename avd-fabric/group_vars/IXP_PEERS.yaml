@@ -24,7 +24,6 @@ port_profiles:
         spanning_tree_bpdufilter: enabled
       raw_eos_cli: |
           switchport port-security
-    endpoint_ports: [ 'N/A', 'N/A' ]
 
   FCIX_PROD:
     parent_profile: FCIX_GENERIC

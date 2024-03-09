@@ -272,19 +272,13 @@ ipv6_access_lists:
 mac_access_lists:
   - name: acl-protect-ixp-mac
     entries:
-      - description: "Allow arp"
-        action: "permit any ffff.ffff.ffff 0000.0000.0000 arp"
-      - description: "Allow IPv6 NS"
-        action: "permit any 3333.ff00.0000 0000.00ff.ffff"
-      - description: "Block all other broad/multicast"
-        action: "deny any 0100.0000.0000 feff.ffff.ffff"
-      - description: "Cisco Discovery Protocol (CDP)"
-        action: "deny any 01:00:0c:cc:cc:cc 00:00:00:00:00:00"
-      - description: "Spanning Tree of both flavors"
-        action: "deny any 01:80:c2:00:00:00 00:00:00:00:00:00"
+      - action: "permit any ffff.ffff.ffff 0000.0000.0000 arp" # allow arp
+      - action: "permit any 3333.ff00.0000 0000.00ff.ffff" # allow IPv6 NS
+      - action: "deny any 0100.0000.0000 feff.ffff.ffff" # Block all other Broadcast/multicast
+      - action: "deny any 01:00:0c:cc:cc:cc 00:00:00:00:00:00" # Cisco Discovery Protocol (CDP)
+      - action: "deny any 01:80:c2:00:00:00 00:00:00:00:00:00" # Both spanning tree flavors
       - action: "deny any 01:00:0c:cc:cc:cd 00:00:00:00:00:00"
-      - description: "Maintenance Operation Protocol (MOP)"
-        action: "deny any ab:00:00:02:00:00 00:00:00:00:00:00"
+      - action: "deny any ab:00:00:02:00:00 00:00:00:00:00:00" # Maintenance Operation Protocol (MOP)
       - action: "permit any any"
 
 qos_profiles:

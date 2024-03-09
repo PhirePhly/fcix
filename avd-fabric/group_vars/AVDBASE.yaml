@@ -9,8 +9,8 @@ mgmt_gateway: 10.44.1.1
 mgmt_destination_networks:
   - 0.0.0.0/0
 
-name_servers:
-  10.44.24.1:
+ip_name_servers:
+  - ip_address: 10.44.24.1
     vrf: MGMT
 
 logging:
@@ -77,6 +77,9 @@ local_users:
 snmp_server:
   contact: noc@fcix.net
   location: FCIX Fabric
+  vrfs:
+    - name: MGMT
+      enable: true
   communities:
     wildsecurepassword:
       access: ro

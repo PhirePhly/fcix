@@ -203,6 +203,12 @@ routers:
         switch_ports: [ Ethernet23 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Akradam Networks'
+  AS64273:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet24 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'Orca Networking Services'
 
 
 

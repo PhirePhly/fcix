@@ -209,6 +209,24 @@ routers:
         switch_ports: [ Ethernet24 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         peer_name: 'Orca Networking Services'
+  AS18526:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet25 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'DDPS'
+  AS52025:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet26 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'ParadoxNetworks Limited'
+  AS23428:
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet27 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+        peer_name: 'ServerForge'
 
 
 

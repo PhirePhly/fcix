@@ -40,13 +40,13 @@ routers:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet5/1 ]
         switches: [ CORE1.FMT2.FCIX.NET ]
-        peer_name: 'PhirePhly Design'
+        _peer_name: 'PhirePhly Design'
   AS6939:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet9/1 ]
         switches: [ CORE1.FMT2.FCIX.NET ]
-        peer_name: 'Hurricane Electric'
+        _peer_name: 'Hurricane Electric'
         port_channel:
           mode: active
   AS26073:
@@ -54,7 +54,7 @@ routers:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet11/1 ]
         switches: [ CORE1.FMT2.FCIX.NET ]
-        peer_name: 'Cofractal'
+        _peer_name: 'Cofractal'
         port_channel:
           mode: active
   AS26073B:
@@ -62,7 +62,7 @@ routers:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet11/1 ]
         switches: [ CORE2.FMT2.FCIX.NET ]
-        peer_name: 'Cofractal'
+        _peer_name: 'Cofractal'
         port_channel:
           mode: active
 
@@ -74,7 +74,7 @@ routers:
       - profile: FCIX_PROD
         switch_ports: [Ethernet1, Ethernet2 ]
         switches: [ SW5.FMT2.FCIX.NET, SW5.FMT2.FCIX.NET ]
-        peer_name: 'DBolical'
+        _peer_name: 'DBolical'
         port_channel:
           mode: active
   AS7247:
@@ -82,151 +82,156 @@ routers:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet3 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Mojo'
+        _peer_name: 'Mojo'
   AS397715:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet4 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'KPFA'
+        _peer_name: 'KPFA'
   AS199518:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet5 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Gregory Shapiro'
+        _peer_name: 'Gregory Shapiro'
   AS138398:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet6 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Prodigi'
+        _peer_name: 'Prodigi'
   AS53616:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet7 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Asymptote Networks'
+        _peer_name: 'Asymptote Networks'
   AS1734:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet8 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'DeLong Consulting'
+        _peer_name: 'DeLong Consulting'
   AS34615:
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet9 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Universal Exports'
+        _peer_name: 'Universal Exports'
   AS32872:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet10 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Difficult Computing'
+        _peer_name: 'Difficult Computing'
   AS54746:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet11 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Klazo'
+        _peer_name: 'Klazo'
   AS63801:
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet12 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'DODO KK'
+        _peer_name: 'DODO KK'
   AS22296:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet13 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Vorsk'
+        _peer_name: 'Vorsk'
   AS15353:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet14 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Xentain Solutions'
+        _peer_name: 'Xentain Solutions'
   AS53283:
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet15 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Litware LLC'
+        _peer_name: 'Litware LLC'
   AS202365:
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet16 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Chronos Teknoloji'
+        _peer_name: 'Chronos Teknoloji'
   AS21805:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet17 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Mr. Hamel'
+        _peer_name: 'Mr. Hamel'
   AS57870:
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet18 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'UNLIMITED IS LIMITED'
+        _peer_name: 'UNLIMITED IS LIMITED'
   AS397131:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet19 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Everythink Innovations'
+        _peer_name: 'Everythink Innovations'
   AS40217:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet20 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'The St. Paul Group'
+        _peer_name: 'The St. Paul Group'
   AS32681:
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet21 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Bay Area Mesh'
+        _peer_name: 'Bay Area Mesh'
   AS17008:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet22 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Trnasit Yard'
+        _peer_name: 'Trnasit Yard'
   AS400919:
     adapters:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet23 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Akradam Networks'
+        _peer_name: 'Akradam Networks'
   AS64273:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet24 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'Orca Networking Services'
+        _peer_name: 'Orca Networking Services'
   AS18526:
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet25 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'DDPS'
+        _peer_name: 'DDPS'
   AS52025:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet26 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'ParadoxNetworks Limited'
+        _peer_name: 'ParadoxNetworks Limited'
   AS23428:
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet27 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        peer_name: 'ServerForge'
+        _peer_name: 'ServerForge'
+  "AS30640 Etheric Networks":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet28 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
 
 
 
@@ -235,7 +240,7 @@ routers:
       - switch_ports: [ Ethernet46 ]
         switches: [ SW4.FMT2.FCIX.NET ]
         endpoint_ports: [ 'N/A' ]
-        peer_name: 'MN VoIP'
+        _peer_name: 'MN VoIP'
         mode: trunk
         vlans: "70-72,1000"
         qos_profile: qprof_fcix_peer
@@ -245,7 +250,7 @@ routers:
       - switch_ports: [ Ethernet47 ]
         switches: [ SW4.FMT2.FCIX.NET ]
         endpoint_ports: [ 'N/A' ]
-        peer_name: 'Wholesale Internet'
+        _peer_name: 'Wholesale Internet'
         mode: trunk
         vlans: "70,1001"
         qos_profile: qprof_fcix_peer
@@ -260,7 +265,7 @@ routers:
       - switch_ports: [ Ethernet32/1 ]
         switches: [ CORE1.FMT2.FCIX.NET ]
         endpoint_ports: [ 'Legacy L2 portal' ]
-        peer_name: 'SW3'
+        _peer_name: 'SW3'
         mode: trunk
         vlans: "10,11,20,21,30,42,43,60,70,71,72,80"
         qos_profile: qprof_fcix_peer

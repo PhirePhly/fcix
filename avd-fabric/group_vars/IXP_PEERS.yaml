@@ -232,6 +232,11 @@ routers:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet28 ]
         switches: [ SW5.FMT2.FCIX.NET ]
+  "AS25820 IT7 Networks":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet29 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
 
 
 

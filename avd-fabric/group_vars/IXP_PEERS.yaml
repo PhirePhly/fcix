@@ -229,12 +229,12 @@ routers:
         _peer_name: 'ServerForge'
   "AS30640 Etheric Networks":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet28 ]
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS25820 IT7 Networks":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet29 ]
         switches: [ SW5.FMT2.FCIX.NET ]
 

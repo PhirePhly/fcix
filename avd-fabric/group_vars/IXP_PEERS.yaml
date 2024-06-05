@@ -237,6 +237,21 @@ routers:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet29 ]
         switches: [ SW5.FMT2.FCIX.NET ]
+  "AS56328 VNP DIGITAL":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet30 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+  "AS21903 Arnhem Networks":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet31 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+  "AS40081 Hexium Hosting":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet32 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
 
 
 

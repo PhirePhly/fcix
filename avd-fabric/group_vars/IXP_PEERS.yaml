@@ -187,7 +187,7 @@ routers:
         _peer_name: 'The St. Paul Group'
   AS32681:
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet21 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         _peer_name: 'Bay Area Mesh'
@@ -244,12 +244,12 @@ routers:
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS21903 Arnhem Networks":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet31 ]
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS40081 Hexium Hosting":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet32 ]
         switches: [ SW5.FMT2.FCIX.NET ]
 

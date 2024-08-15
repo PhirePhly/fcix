@@ -221,12 +221,11 @@ routers:
         switch_ports: [ Ethernet26 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         _peer_name: 'ParadoxNetworks Limited'
-  AS23428:
+  "AS23428 ServerForge":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet27 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        _peer_name: 'ServerForge'
   "AS30640 Etheric Networks":
     adapters:
       - profile: FCIX_PROD

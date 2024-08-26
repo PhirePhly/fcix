@@ -251,6 +251,11 @@ routers:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet32 ]
         switches: [ SW5.FMT2.FCIX.NET ]
+  "AS12077 Subconscious":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet33 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
 
 
 

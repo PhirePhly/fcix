@@ -256,6 +256,16 @@ routers:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet33 ]
         switches: [ SW5.FMT2.FCIX.NET ]
+  "AS31788 Poppy Inc":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet34 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+  "AS401117 EQM Holdings":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet35 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
 
 
 

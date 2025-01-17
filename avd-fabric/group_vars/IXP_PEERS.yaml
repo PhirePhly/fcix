@@ -263,7 +263,7 @@ routers:
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS401117 EQM Holdings":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet35 ]
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS153466 Counterfate":

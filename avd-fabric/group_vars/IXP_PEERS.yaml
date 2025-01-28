@@ -113,12 +113,11 @@ routers:
         switch_ports: [ Ethernet8 ]
         switches: [ SW5.FMT2.FCIX.NET ]
         _peer_name: 'DeLong Consulting'
-  AS34615:
+  "AS34615 Universal Exports":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet9 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-        _peer_name: 'Universal Exports'
   AS32872:
     adapters:
       - profile: FCIX_PROD

@@ -270,6 +270,16 @@ routers:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet36 ]
         switches: [ SW5.FMT2.FCIX.NET ]
+  "AS27180 Ace Tomato":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet37 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+  "AS893 Ninja-IX":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet38 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
 
 
 

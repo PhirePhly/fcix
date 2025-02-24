@@ -277,7 +277,7 @@ routers:
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS893 Ninja-IX":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet38 ]
         switches: [ SW5.FMT2.FCIX.NET ]
 

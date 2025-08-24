@@ -285,6 +285,11 @@ routers:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet39 ]
         switches: [ SW5.FMT2.FCIX.NET ]
+  "AS54014 Jurassic Innovations":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet40 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
 
 
 

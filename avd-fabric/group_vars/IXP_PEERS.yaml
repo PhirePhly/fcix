@@ -295,6 +295,11 @@ routers:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet41 ]
         switches: [ SW5.FMT2.FCIX.NET ]
+  "AS25957":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet42 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
 
 
 

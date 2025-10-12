@@ -290,6 +290,11 @@ routers:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet40 ]
         switches: [ SW5.FMT2.FCIX.NET ]
+  "AS401786 Fracctal Inc":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet41 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
 
 
 

@@ -267,7 +267,7 @@ routers:
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS153466 Counterfate":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet36 ]
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS27180 Ace Tomato":
@@ -304,6 +304,11 @@ routers:
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet43 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+  "AS38439 zfs.rent":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet44 ]
         switches: [ SW5.FMT2.FCIX.NET ]
 
 

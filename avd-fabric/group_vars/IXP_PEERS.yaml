@@ -300,6 +300,11 @@ routers:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet42 ]
         switches: [ SW5.FMT2.FCIX.NET ]
+  "AS401854 Velociraptor LLC":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet43 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
 
 
 

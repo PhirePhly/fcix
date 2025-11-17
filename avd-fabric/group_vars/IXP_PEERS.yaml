@@ -310,6 +310,11 @@ routers:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet44 ]
         switches: [ SW5.FMT2.FCIX.NET ]
+  "AS397554":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet45 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
 
 
 

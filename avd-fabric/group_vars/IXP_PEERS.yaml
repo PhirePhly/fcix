@@ -295,7 +295,7 @@ routers:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet41 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-  "AS25957":
+  "AS25957 Kisara Dev":
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet42 ]
@@ -310,10 +310,15 @@ routers:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet44 ]
         switches: [ SW5.FMT2.FCIX.NET ]
-  "AS397554":
+  "AS397554 Happy Cycling":
     adapters:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet45 ]
+        switches: [ SW5.FMT2.FCIX.NET ]
+  "AS400566 Sergio Zygmunt Group":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet46 ]
         switches: [ SW5.FMT2.FCIX.NET ]
 
 

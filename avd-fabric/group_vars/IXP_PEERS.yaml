@@ -292,7 +292,7 @@ routers:
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS401786 Fracctal Inc":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet41 ]
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS25957 Kisara Dev":

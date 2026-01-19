@@ -287,7 +287,7 @@ routers:
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS54014 Jurassic Innovations":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet40 ]
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS401786 Fracctal Inc":
@@ -297,7 +297,7 @@ routers:
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS25957 Kisara Dev":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet42 ]
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS401854 Velociraptor LLC":
@@ -317,7 +317,7 @@ routers:
         switches: [ SW5.FMT2.FCIX.NET ]
   "AS400566 Sergio Zygmunt Group":
     adapters:
-      - profile: FCIX_PROV
+      - profile: FCIX_PROD
         switch_ports: [ Ethernet46 ]
         switches: [ SW5.FMT2.FCIX.NET ]
 

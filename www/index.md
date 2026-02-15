@@ -13,4 +13,3 @@ The Fremont Cabal Internet Exchange is an [Internet Exchange Point](https://en.w
 * [Hurricane Electric FMT2](http://he.net/tour/fremont2.html)
 * [Hurricane Electric FMT1](http://he.net/tour/fremont1.html)
 
-![Traffic graph](/traffic.png)

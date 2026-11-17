@@ -320,6 +320,11 @@ routers:
       - profile: FCIX_PROD
         switch_ports: [ Ethernet46 ]
         switches: [ SW5.FMT2.FCIX.NET ]
+  "AS17024 BlueFur":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet1 ]
+        switches: [ SW4.FMT2.FCIX.NET ]
 
 
 

@@ -335,6 +335,11 @@ routers:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet3 ]
         switches: [ SW4.FMT2.FCIX.NET ]
+  "AS401903 Crimson Pacific Networks":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet4 ]
+        switches: [ SW4.FMT2.FCIX.NET ]
 
 
 

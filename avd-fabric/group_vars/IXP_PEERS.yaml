@@ -345,6 +345,11 @@ routers:
       - profile: FCIX_PROV
         switch_ports: [ Ethernet5 ]
         switches: [ SW4.FMT2.FCIX.NET ]
+  "AS6379 Turtle Systems":
+    adapters:
+      - profile: FCIX_PROV
+        switch_ports: [ Ethernet6 ]
+        switches: [ SW4.FMT2.FCIX.NET ]
 
 
 
